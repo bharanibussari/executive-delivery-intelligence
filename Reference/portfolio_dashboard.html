@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Programme Dashboard · Q2 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --navy:   #0F1F3D;
+    --navy2:  #1A3260;
+    --teal:   #1D6FA4;
+    --teal2:  #2E8FC0;
+    --slate:  #374151;
+    --muted:  #6B7280;
+    --border: #E5E7EB;
+    --bg:     #F8FAFC;
+    --white:  #FFFFFF;
+    --green:  #16A34A;
+    --amber:  #D97706;
+    --red:    #DC2626;
+    --green-bg:  #DCFCE7;
+    --amber-bg:  #FEF3C7;
+    --red-bg:    #FEE2E2;
+    --green-txt: #15803D;
+    --amber-txt: #B45309;
+    --red-txt:   #B91C1C;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--slate);
+    min-height: 100vh;
+  }
+
+  /* ── Top bar ─────────────────────────────── */
+  header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+    padding: 0 32px;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .header-left {
+    padding: 24px 0;
+  }
+
+  .header-left .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7EB8D8;
+    margin-bottom: 4px;
+  }
+
+  .header-left h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .header-left .sub {
+    font-size: 13px;
+    color: #93C5D8;
+    margin-top: 4px;
+  }
+
+  .header-stats {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .hstat {
+    padding: 18px 28px;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    min-width: 110px;
+  }
+
+  .hstat .val {
+    font-size: 26px;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .hstat .lbl {
+    font-size: 11px;
+    color: #93C5D8;
+    margin-top: 4px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .hstat .val.green { color: #4ADE80; }
+  .hstat .val.amber { color: #FCD34D; }
+  .hstat .val.red   { color: #F87171; }
+
+  /* ── Main layout ─────────────────────────── */
+  main {
+    padding: 28px 32px 48px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* ── Section label ─────────────────────────── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    margin-top: 28px;
+  }
+
+  /* ── Summary cards ────────────────────────── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+
+  .scard {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scard::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--teal);
+  }
+
+  .scard.green-accent::before { background: var(--green); }
+  .scard.amber-accent::before { background: #F59E0B; }
+  .scard.red-accent::before   { background: var(--red); }
+  .scard.blue-accent::before  { background: var(--teal); }
+
+  .scard .sc-val {
+    font-size: 32px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    line-height: 1;
+    color: var(--navy);
+  }
+
+  .scard .sc-lbl {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .scard .sc-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Project grid ─────────────────────────── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .pcard {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .pcard:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .pcard-header {
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .pcard-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+
+  .pcard-client {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  .rag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .rag.green { background: var(--green-bg); color: var(--green-txt); }
+  .rag.amber { background: var(--amber-bg); color: var(--amber-txt); }
+  .rag.red   { background: var(--red-bg);   color: var(--red-txt); }
+
+  .rag::before {
+    content: '●';
+    font-size: 9px;
+  }
+
+  .pcard-body {
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+  }
+
+  .pmeta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .pmeta .pm-lbl {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  .pmeta .pm-val {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--slate);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .pmeta .pm-val.plain {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+  }
+
+  /* Budget bar */
+  .budget-bar-wrap {
+    grid-column: 1 / -1;
+  }
+
+  .budget-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+
+  .budget-bar-labels .spent {
+    font-weight: 600;
+    color: var(--slate);
+  }
+
+  .budget-track {
+    background: var(--bg);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .budget-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s ease;
+  }
+
+  .budget-fill.ok     { background: linear-gradient(90deg, #1D6FA4, #2E8FC0); }
+  .budget-fill.caution{ background: linear-gradient(90deg, #D97706, #F59E0B); }
+  .budget-fill.over   { background: linear-gradient(90deg, #DC2626, #EF4444); }
+
+  /* Phase pill */
+  .phase-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    background: #EFF6FF;
+    color: #1D4ED8;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* Sprint dots */
+  .sprint-dots {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    margin-top: 2px;
+  }
+
+  .sdot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: var(--border);
+  }
+
+  .sdot.done  { background: var(--teal); }
+  .sdot.active{ background: var(--teal); opacity: 0.5; }
+
+  /* Risks & decisions strip */
+  .pcard-footer {
+    padding: 10px 20px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 16px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .pf-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .pf-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .pf-badge.risk-0  { background: #ECFDF5; color: #065F46; }
+  .pf-badge.risk-1  { background: var(--amber-bg); color: var(--amber-txt); }
+  .pf-badge.risk-2p { background: var(--red-bg);   color: var(--red-txt); }
+  .pf-badge.dec-0   { background: #EFF6FF; color: #1D4ED8; }
+  .pf-badge.dec-1p  { background: #FEF3C7; color: #92400E; }
+
+  .pcard-highlights {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+
+  .pcard-highlights strong {
+    color: var(--navy);
+    font-weight: 600;
+  }
+
+  /* ── Timeline row ─────────────────────────── */
+  .timeline-section {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+
+  .tl-header {
+    padding: 14px 20px;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tl-header span {
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFFFFF;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .tl-header .tl-period {
+    font-size: 11px;
+    color: #93C5D8;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .tl-body {
+    padding: 16px 20px;
+    overflow-x: auto;
+  }
+
+  .tl-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+  }
+
+  .tl-table th {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tl-table td {
+    font-size: 12px;
+    padding: 8px 8px;
+    border-bottom: 1px solid #F3F4F6;
+    vertical-align: middle;
+  }
+
+  .tl-table tr:last-child td { border-bottom: none; }
+
+  .tl-bar-cell { width: 50%; }
+
+  .tl-bar-track {
+    position: relative;
+    height: 20px;
+    background: var(--bg);
+    border-radius: 4px;
+    overflow: visible;
+    border: 1px solid var(--border);
+  }
+
+  .tl-bar-fill {
+    position: absolute;
+    top: 0; bottom: 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .tl-today {
+    position: absolute;
+    top: -3px; bottom: -3px;
+    width: 2px;
+    background: #EF4444;
+    z-index: 10;
+  }
+
+  .tl-today::before {
+    content: 'TODAY';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    font-weight: 700;
+    color: #EF4444;
+    white-space: nowrap;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── Footer ────────────────────────────────── */
+  footer {
+    text-align: center;
+    font-size: 11px;
+    color: #9CA3AF;
+    padding: 16px 32px 32px;
+  }
+
+  /* ── Filter tabs ────────────────────────────── */
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    margin-top: 28px;
+  }
+
+  .filter-tabs {
+    display: flex;
+    gap: 6px;
+  }
+
+  .ftab {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .ftab:hover { border-color: var(--teal); color: var(--teal); }
+  .ftab.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  .report-date {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Header ────────────────────────────────────────────── -->
+<header>
+  <div class="header-left">
+    <div class="eyebrow">Programme Office · Steering Committee</div>
+    <h1>Portfolio Status Dashboard</h1>
+    <div class="sub">Q2 2026 · Reporting Period: 16–28 June 2026</div>
+  </div>
+  <div class="header-stats">
+    <div class="hstat">
+      <div class="val">6</div>
+      <div class="lbl">Projects</div>
+    </div>
+    <div class="hstat">
+      <div class="val green">4</div>
+      <div class="lbl">Green</div>
+    </div>
+    <div class="hstat">
+      <div class="val amber">1</div>
+      <div class="lbl">Amber</div>
+    </div>
+    <div class="hstat">
+      <div class="val red">1</div>
+      <div class="lbl">Red</div>
+    </div>
+    <div class="hstat">
+      <div class="val">$2.4M</div>
+      <div class="lbl">Total Budget</div>
+    </div>
+    <div class="hstat">
+      <div class="val">61%</div>
+      <div class="lbl">Avg Consumed</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ── Summary cards ──────────────────────────────────── -->
+  <div class="section-label">Portfolio Snapshot</div>
+  <div class="summary-grid">
+    <div class="scard green-accent">
+      <div class="sc-val">4 / 6</div>
+      <div class="sc-lbl">On Track (Green)</div>
+      <div class="sc-sub">All milestones met or ahead this period</div>
+    </div>
+    <div class="scard amber-accent">
+      <div class="sc-val">$1.47M</div>
+      <div class="sc-lbl">Budget Spent YTD</div>
+      <div class="sc-sub">of $2.41M total authorised spend</div>
+    </div>
+    <div class="scard blue-accent">
+      <div class="sc-val">3</div>
+      <div class="sc-lbl">Open Risks</div>
+      <div class="sc-sub">1 high · 2 medium — all mitigated</div>
+    </div>
+    <div class="scard red-accent">
+      <div class="sc-val">2</div>
+      <div class="sc-lbl">Decisions Pending</div>
+      <div class="sc-sub">Required from steering committee this cycle</div>
+    </div>
+  </div>
+
+  <!-- ── Filter ─────────────────────────────────────────── -->
+  <div class="filter-bar">
+    <div class="filter-tabs">
+      <button class="ftab active" onclick="filterCards('all', this)">All Projects</button>
+      <button class="ftab" onclick="filterCards('green', this)">Green</button>
+      <button class="ftab" onclick="filterCards('amber', this)">Amber</button>
+      <button class="ftab" onclick="filterCards('red', this)">Red</button>
+    </div>
+    <div class="report-date">As at 28 Jun 2026</div>
+  </div>
+
+  <!-- ── Project cards ──────────────────────────────────── -->
+  <div class="projects-grid" id="projectsGrid">
+
+    <!-- 1. XYZ Sales Transformation -->
+    <div class="pcard" data-rag="green">
+      <div class="pcard-header">
+        <div>
+          <div class="pcard-title">XYZ Sales Transformation</div>
+          <div class="pcard-client">Client: XYZ Corp · PM: Sarah Chen</div>
+        </div>
+        <span class="rag green">Green</span>
+      </div>
+      <div class="pcard-body">
+        <div class="pmeta">
+          <span class="pm-lbl">Phase</span>
+          <span class="pm-val"><span class="phase-pill">Build · Sprint 4/5</span></span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Go-Live</span>
+          <span class="pm-val">15 Aug 2026</span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Sprints</span>
+          <div class="sprint-dots">
+            <div class="sdot done"></div><div class="sdot done"></div>
+            <div class="sdot done"></div><div class="sdot active"></div>
+            <div class="sdot"></div>
+          </div>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Team Size</span>
+          <span class="pm-val">8 FTE</span>
+        </div>
+        <div class="budget-bar-wrap">
+          <div class="budget-bar-labels">
+            <span class="spent">$52,700 spent</span>
+            <span>62% · Budget: $85,000</span>
+          </div>
+          <div class="budget-track"><div class="budget-fill ok" style="width:62%"></div></div>
+        </div>
+      </div>
+      <div class="pcard-highlights">
+        <strong>This period:</strong> Sprint 4 dev complete; UAT prep underway. No blockers. Data migration scripts 80% done.
+      </div>
+      <div class="pcard-footer">
+        <div class="pf-item"><span class="pf-badge risk-0">0 Risks</span> logged</div>
+        <div class="pf-item"><span class="pf-badge dec-0">0 Decisions</span> required</div>
+      </div>
+    </div>
+
+    <!-- 2. Omega ERP Rollout -->
+    <div class="pcard" data-rag="amber">
+      <div class="pcard-header">
+        <div>
+          <div class="pcard-title">Omega ERP Rollout</div>
+          <div class="pcard-client">Client: Omega Manufacturing · PM: James Okafor</div>
+        </div>
+        <span class="rag amber">Amber</span>
+      </div>
+      <div class="pcard-body">
+        <div class="pmeta">
+          <span class="pm-lbl">Phase</span>
+          <span class="pm-val"><span class="phase-pill">UAT · Wave 2</span></span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Go-Live</span>
+          <span class="pm-val">1 Oct 2026</span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Defects</span>
+          <span class="pm-val" style="color:#D97706">14 open (3 P1)</span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Team Size</span>
+          <span class="pm-val">14 FTE</span>
+        </div>
+        <div class="budget-bar-wrap">
+          <div class="budget-bar-labels">
+            <span class="spent">$312,000 spent</span>
+            <span>78% · Budget: $400,000</span>
+          </div>
+          <div class="budget-track"><div class="budget-fill caution" style="width:78%"></div></div>
+        </div>
+      </div>
+      <div class="pcard-highlights">
+        <strong>Risk:</strong> 3 Priority-1 defects in payroll module threaten UAT sign-off. Vendor patch expected 5 Jul — sign-off date at risk by 2 weeks.
+      </div>
+      <div class="pcard-footer">
+        <div class="pf-item"><span class="pf-badge risk-1">1 Risk</span> HIGH — payroll defects</div>
+        <div class="pf-item"><span class="pf-badge dec-1p">1 Decision</span> sign-off date waiver</div>
+      </div>
+    </div>
+
+    <!-- 3. Apex CX Platform -->
+    <div class="pcard" data-rag="green">
+      <div class="pcard-header">
+        <div>
+          <div class="pcard-title">Apex CX Platform Modernisation</div>
+          <div class="pcard-client">Client: Apex Financial · PM: Lena Kovac</div>
+        </div>
+        <span class="rag green">Green</span>
+      </div>
+      <div class="pcard-body">
+        <div class="pmeta">
+          <span class="pm-lbl">Phase</span>
+          <span class="pm-val"><span class="phase-pill">Design · Finalise</span></span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Go-Live</span>
+          <span class="pm-val">15 Feb 2027</span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Sprints</span>
+          <div class="sprint-dots">
+            <div class="sdot done"></div><div class="sdot done"></div>
+            <div class="sdot active"></div><div class="sdot"></div>
+            <div class="sdot"></div><div class="sdot"></div>
+          </div>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Team Size</span>
+          <span class="pm-val">11 FTE</span>
+        </div>
+        <div class="budget-bar-wrap">
+          <div class="budget-bar-labels">
+            <span class="spent">$187,500 spent</span>
+            <span>37% · Budget: $510,000</span>
+          </div>
+          <div class="budget-track"><div class="budget-fill ok" style="width:37%"></div></div>
+        </div>
+      </div>
+      <div class="pcard-highlights">
+        <strong>This period:</strong> UX design approved by client; API contract finalised. Moving to build phase 2 weeks ahead of plan.
+      </div>
+      <div class="pcard-footer">
+        <div class="pf-item"><span class="pf-badge risk-1">1 Risk</span> MED — key architect on leave Jul</div>
+        <div class="pf-item"><span class="pf-badge dec-0">0 Decisions</span> required</div>
+      </div>
+    </div>
+
+    <!-- 4. Nova Data Warehouse -->
+    <div class="pcard" data-rag="red">
+      <div class="pcard-header">
+        <div>
+          <div class="pcard-title">Nova Group Data Warehouse</div>
+          <div class="pcard-client">Client: Nova Group · PM: Marcus Bello</div>
+        </div>
+        <span class="rag red">Red</span>
+      </div>
+      <div class="pcard-body">
+        <div class="pmeta">
+          <span class="pm-lbl">Phase</span>
+          <span class="pm-val"><span class="phase-pill" style="background:#FEF2F2;color:#991B1B">Build · Delayed</span></span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Go-Live</span>
+          <span class="pm-val" style="color:#DC2626">30 Sep 2026 ⚠</span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Delay</span>
+          <span class="pm-val" style="color:#DC2626">+6 weeks</span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Team Size</span>
+          <span class="pm-val">9 FTE</span>
+        </div>
+        <div class="budget-bar-wrap">
+          <div class="budget-bar-labels">
+            <span class="spent">$298,000 spent</span>
+            <span>85% · Budget: $350,000</span>
+          </div>
+          <div class="budget-track"><div class="budget-fill over" style="width:85%"></div></div>
+        </div>
+      </div>
+      <div class="pcard-highlights">
+        <strong>Issue:</strong> Source system data quality failures blocking ETL completion. Client IT team unresponsive. Budget exhaustion risk by 31 Jul without scope reduction or additional funding.
+      </div>
+      <div class="pcard-footer">
+        <div class="pf-item"><span class="pf-badge risk-2p">2 Risks</span> HIGH — budget + data quality</div>
+        <div class="pf-item"><span class="pf-badge dec-1p">1 Decision</span> scope / budget trade-off</div>
+      </div>
+    </div>
+
+    <!-- 5. Pinnacle HR Digital -->
+    <div class="pcard" data-rag="green">
+      <div class="pcard-header">
+        <div>
+          <div class="pcard-title">Pinnacle HR Digital Transformation</div>
+          <div class="pcard-client">Client: Pinnacle Retail · PM: Yuki Tanaka</div>
+        </div>
+        <span class="rag green">Green</span>
+      </div>
+      <div class="pcard-body">
+        <div class="pmeta">
+          <span class="pm-lbl">Phase</span>
+          <span class="pm-val"><span class="phase-pill">Hypercare · Wk 3</span></span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Live Since</span>
+          <span class="pm-val">2 Jun 2026</span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Support Tickets</span>
+          <span class="pm-val" style="color:#16A34A">4 open (0 P1)</span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Team Size</span>
+          <span class="pm-val">6 FTE</span>
+        </div>
+        <div class="budget-bar-wrap">
+          <div class="budget-bar-labels">
+            <span class="spent">$418,000 spent</span>
+            <span>98% · Budget: $425,000</span>
+          </div>
+          <div class="budget-track"><div class="budget-fill ok" style="width:98%"></div></div>
+        </div>
+      </div>
+      <div class="pcard-highlights">
+        <strong>This period:</strong> Go-live successful — 1,200 employees onboarded. 4 minor support tickets open; all P3. System performance 99.8% uptime. On track to exit hypercare 15 Jul.
+      </div>
+      <div class="pcard-footer">
+        <div class="pf-item"><span class="pf-badge risk-0">0 Risks</span> logged</div>
+        <div class="pf-item"><span class="pf-badge dec-0">0 Decisions</span> required</div>
+      </div>
+    </div>
+
+    <!-- 6. Bluestar Supply Chain -->
+    <div class="pcard" data-rag="green">
+      <div class="pcard-header">
+        <div>
+          <div class="pcard-title">Bluestar Supply Chain Optimisation</div>
+          <div class="pcard-client">Client: Bluestar Logistics · PM: Priya Nair</div>
+        </div>
+        <span class="rag green">Green</span>
+      </div>
+      <div class="pcard-body">
+        <div class="pmeta">
+          <span class="pm-lbl">Phase</span>
+          <span class="pm-val"><span class="phase-pill">Discovery · Wk 4</span></span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Go-Live</span>
+          <span class="pm-val">1 Apr 2027</span>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Sprints</span>
+          <div class="sprint-dots">
+            <div class="sdot done"></div><div class="sdot active"></div>
+            <div class="sdot"></div><div class="sdot"></div>
+          </div>
+        </div>
+        <div class="pmeta">
+          <span class="pm-lbl">Team Size</span>
+          <span class="pm-val">5 FTE</span>
+        </div>
+        <div class="budget-bar-wrap">
+          <div class="budget-bar-labels">
+            <span class="spent">$43,500 spent</span>
+            <span>29% · Budget: $150,000 (Phase 1)</span>
+          </div>
+          <div class="budget-track"><div class="budget-fill ok" style="width:29%"></div></div>
+        </div>
+      </div>
+      <div class="pcard-highlights">
+        <strong>This period:</strong> Stakeholder workshops complete; current-state process maps signed off. Requirements backlog drafted — 87 items prioritised with client.
+      </div>
+      <div class="pcard-footer">
+        <div class="pf-item"><span class="pf-badge risk-0">0 Risks</span> logged</div>
+        <div class="pf-item"><span class="pf-badge dec-0">0 Decisions</span> required</div>
+      </div>
+    </div>
+
+  </div><!-- /projects-grid -->
+
+  <!-- ── Timeline ──────────────────────────────────────── -->
+  <div class="section-label" style="margin-top:32px">Programme Timeline</div>
+  <div class="timeline-section">
+    <div class="tl-header">
+      <span>Delivery Timeline · All Projects</span>
+      <span class="tl-period">Jan 2026 — Apr 2027</span>
+    </div>
+    <div class="tl-body">
+      <table class="tl-table">
+        <colgroup>
+          <col style="width:22%">
+          <col style="width:10%">
+          <col style="width:10%">
+          <col class="tl-bar-cell">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Start</th>
+            <th>Go-Live</th>
+            <th>Timeline (Jan 2026 → Apr 2027)</th>
+          </tr>
+        </thead>
+        <tbody id="tlBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Programme Office &nbsp;·&nbsp; Steering Committee Dashboard &nbsp;·&nbsp; Generated 28 June 2026 &nbsp;·&nbsp; Confidential
+</footer>
+
+<script>
+  // ── Timeline data & render ─────────────────────────────
+  const TL_START = new Date('2026-01-01');
+  const TL_END   = new Date('2027-04-01');
+  const TL_SPAN  = TL_END - TL_START;
+  const TODAY    = new Date('2026-06-28');
+
+  const projects = [
+    { name: 'XYZ Sales Transformation', start: '2026-02-03', end: '2026-08-15', rag: 'green' },
+    { name: 'Omega ERP Rollout',         start: '2025-11-01', end: '2026-10-01', rag: 'amber' },
+    { name: 'Apex CX Platform',          start: '2026-03-15', end: '2027-02-15', rag: 'green' },
+    { name: 'Nova Data Warehouse',       start: '2025-12-01', end: '2026-09-30', rag: 'red'   },
+    { name: 'Pinnacle HR Digital',       start: '2025-10-01', end: '2026-07-15', rag: 'green' },
+    { name: 'Bluestar Supply Chain',     start: '2026-05-01', end: '2027-04-01', rag: 'green' },
+  ];
+
+  const startLabels = { 'XYZ Sales Transformation':'Feb 2026','Omega ERP Rollout':'Nov 2025','Apex CX Platform':'Mar 2026','Nova Data Warehouse':'Dec 2025','Pinnacle HR Digital':'Oct 2025','Bluestar Supply Chain':'May 2026' };
+  const endLabels   = { 'XYZ Sales Transformation':'15 Aug 26','Omega ERP Rollout':'1 Oct 26','Apex CX Platform':'15 Feb 27','Nova Data Warehouse':'30 Sep 26 ⚠','Pinnacle HR Digital':'15 Jul 26','Bluestar Supply Chain':'1 Apr 27' };
+
+  const colors = { green:'#1D6FA4', amber:'#D97706', red:'#DC2626' };
+
+  function pct(date) {
+    const d = new Date(date);
+    const clamped = Math.max(TL_START, Math.min(TL_END, d));
+    return ((clamped - TL_START) / TL_SPAN * 100).toFixed(1);
+  }
+
+  const todayPct = pct(TODAY);
+  const tbody = document.getElementById('tlBody');
+
+  projects.forEach(p => {
+    const left  = parseFloat(pct(p.start));
+    const right = parseFloat(pct(p.end));
+    const width = Math.max(right - left, 1);
+    const color = colors[p.rag];
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td style="font-weight:600;font-size:12px;color:#1F3864">${p.name}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:11px;color:#6B7280">${startLabels[p.name]}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:11px;color:${p.rag==='red'?'#DC2626':'#374151'}">${endLabels[p.name]}</td>
+      <td>
+        <div class="tl-bar-track">
+          <div class="tl-bar-fill" style="left:${left}%;width:${width}%;background:${color};opacity:0.85"></div>
+          <div class="tl-today" style="left:${todayPct}%"></div>
+        </div>
+      </td>`;
+    tbody.appendChild(row);
+  });
+
+  // ── Filter ─────────────────────────────────────────────
+  function filterCards(rag, btn) {
+    document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.pcard').forEach(c => {
+      c.style.display = (rag === 'all' || c.dataset.rag === rag) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
