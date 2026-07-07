@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Executive Delivery Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="executive-header">
+      <nav class="top-nav" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="Executive Delivery Intelligence home">
+          <span class="brand-mark">EDI</span>
+          <span>
+            <strong>Executive Delivery Intelligence</strong>
+            <small>Portfolio Command Centre</small>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a href="#portfolio">Portfolio</a>
+          <a href="#risks">Risks</a>
+          <a href="#decisions">Decisions</a>
+          <a href="#timeline">Timeline</a>
+        </div>
+      </nav>
+
+      <section id="top" class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Executive portfolio health</p>
+          <h1>One clear view of delivery confidence, risks and decisions.</h1>
+          <p class="hero-text">A static GitHub Pages dashboard that consolidates portfolio status, budget progress, open risks and pending executive decisions into a responsive single-page view.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#portfolio">Review portfolio</a>
+            <a class="button secondary" href="#use-case">View use case</a>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="Executive health summary">
+          <span class="status-pill amber">Attention required</span>
+          <h2>72%</h2>
+          <p>Delivery confidence across strategic programmes</p>
+          <div class="mini-grid">
+            <span><strong>6</strong> Projects</span>
+            <span><strong>£42.8m</strong> Budget</span>
+            <span><strong>11</strong> Open risks</span>
+          </div>
+        </aside>
+      </section>
+    </header>
+
+    <main>
+      <section id="use-case" class="use-case card">
+        <div>
+          <p class="eyebrow">Use Case 1</p>
+          <h2>Single view of portfolio health</h2>
+        </div>
+        <div class="use-case-grid">
+          <article>
+            <h3>Business Problem</h3>
+            <p>Executives receive information from multiple reports, dashboards and meetings, yet still don't have a single, clear view of portfolio health to support timely decision-making.</p>
+          </article>
+          <article>
+            <h3>User Story</h3>
+            <p>As a Program Director, I want a single view of portfolio health so that I can identify delivery risks and make informed decisions quickly.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="portfolio" class="section-block">
+        <div class="section-heading">
+          <p class="eyebrow">Portfolio dashboard</p>
+          <h2>Summary metrics</h2>
+        </div>
+        <div id="summaryMetrics" class="metrics-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="eyebrow">Executive snapshots</p>
+          <h2>Latest delivery signals</h2>
+        </div>
+        <div id="snapshotCards" class="snapshot-grid"></div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading with-actions">
+          <div>
+            <p class="eyebrow">Project portfolio</p>
+            <h2>Six active initiatives</h2>
+          </div>
+          <div class="rag-tabs" role="tablist" aria-label="Filter projects by RAG status">
+            <button class="tab active" type="button" data-filter="all">All</button>
+            <button class="tab" type="button" data-filter="green">Green</button>
+            <button class="tab" type="button" data-filter="amber">Amber</button>
+            <button class="tab" type="button" data-filter="red">Red</button>
+          </div>
+        </div>
+        <div id="projectCards" class="projects-grid"></div>
+      </section>
+
+      <section class="two-column">
+        <section id="risks" class="card list-card">
+          <div class="section-heading compact">
+            <p class="eyebrow">Open risks</p>
+            <h2>Items requiring attention</h2>
+          </div>
+          <div id="riskList" class="stacked-list"></div>
+        </section>
+
+        <section id="decisions" class="card list-card">
+          <div class="section-heading compact">
+            <p class="eyebrow">Decisions pending</p>
+            <h2>Executive actions</h2>
+          </div>
+          <div id="decisionList" class="stacked-list"></div>
+        </section>
+      </section>
+
+      <section id="timeline" class="section-block card">
+        <div class="section-heading compact">
+          <p class="eyebrow">Programme timeline</p>
+          <h2>Upcoming milestones</h2>
+        </div>
+        <div id="timelineList" class="timeline"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
