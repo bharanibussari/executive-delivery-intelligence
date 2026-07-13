@@ -1,134 +1,3628 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Executive Delivery Intelligence</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Delivery Intelligence | Bharani Bussari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   EXECUTIVE DELIVERY INTELLIGENCE
+   Design System — Token Definitions
+   ============================================================ */
+:root {
+  /* Palette */
+  --bg-base:        #0A0E1A;
+  --bg-surface:     #111827;
+  --bg-sidebar:     #0D1628;
+  --bg-card:        rgba(255,255,255,0.04);
+  --bg-card-hover:  rgba(255,255,255,0.07);
+  --bg-glass:       rgba(17, 24, 39, 0.8);
+  --border:         rgba(255,255,255,0.08);
+  --border-active:  rgba(37,99,235,0.6);
+
+  --primary:        #2563EB;
+  --primary-light:  #3B82F6;
+  --primary-glow:   rgba(37,99,235,0.25);
+  --accent:         #06B6D4;
+  --accent-glow:    rgba(6,182,212,0.2);
+  --success:        #10B981;
+  --warning:        #F59E0B;
+  --danger:         #EF4444;
+  --purple:         #8B5CF6;
+
+  /* Text */
+  --text-primary:   #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted:     #475569;
+  --text-accent:    #06B6D4;
+
+  /* Layout */
+  --sidebar-w:      240px;
+  --topbar-h:       60px;
+  --radius:         12px;
+  --radius-sm:      8px;
+  --radius-lg:      16px;
+
+  /* Transitions */
+  --transition:     0.2s ease;
+  --transition-slow: 0.4s ease;
+
+  /* Font */
+  --font-ui:        'Inter', system-ui, sans-serif;
+  --font-mono:      'JetBrains Mono', monospace;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-ui);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Animated grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(37,99,235,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: transform var(--transition-slow);
+}
+
+/* Sidebar brand */
+.sidebar-brand {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.brand-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+.brand-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.brand-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.brand-tag {
+  display: inline-block;
+  font-size: 9px;
+  font-family: var(--font-mono);
+  background: var(--primary-glow);
+  color: var(--primary-light);
+  border: 1px solid rgba(37,99,235,0.3);
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Nav sections */
+.nav-section {
+  padding: 12px 12px 4px;
+}
+.nav-section-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0 8px;
+  margin-bottom: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  position: relative;
+  margin-bottom: 1px;
+  user-select: none;
+}
+.nav-item:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+.nav-item.active {
+  background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(6,182,212,0.1));
+  color: var(--text-primary);
+  border: 1px solid var(--border-active);
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary), var(--accent));
+  border-radius: 0 3px 3px 0;
+}
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+.nav-item.active .nav-icon { opacity: 1; }
+.nav-badge {
+  margin-left: auto;
+  background: var(--danger);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-family: var(--font-mono);
+}
+.nav-badge.blue { background: var(--primary); }
+.nav-badge.green { background: var(--success); }
+
+/* Sidebar footer */
+.sidebar-footer {
+  margin-top: auto;
+  padding: 12px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.user-card:hover { background: var(--bg-card-hover); }
+.user-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--primary));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.user-info { flex: 1; min-width: 0; }
+.user-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-role {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.user-status {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 6px var(--success);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   TOPBAR
+   ============================================================ */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-w);
+  right: 0;
+  height: var(--topbar-h);
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  z-index: 90;
+}
+
+.topbar-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  flex: 1;
+}
+.breadcrumb-sep { opacity: 0.4; }
+.breadcrumb-current {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.topbar-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  width: 220px;
+  cursor: text;
+  transition: border-color var(--transition);
+}
+.topbar-search:focus-within { border-color: var(--primary); }
+.topbar-search input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  width: 100%;
+}
+.topbar-search input::placeholder { color: var(--text-muted); }
+.search-icon { color: var(--text-muted); font-size: 14px; }
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.topbar-btn {
+  position: relative;
+  width: 34px; height: 34px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all var(--transition);
+  color: var(--text-secondary);
+}
+.topbar-btn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border-color: var(--border-active);
+}
+.notif-dot {
+  position: absolute;
+  top: 5px; right: 5px;
+  width: 7px; height: 7px;
+  background: var(--danger);
+  border-radius: 50%;
+  border: 1.5px solid var(--bg-surface);
+  box-shadow: 0 0 6px var(--danger);
+}
+
+.dark-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-secondary);
+  transition: all var(--transition);
+  font-family: var(--font-ui);
+}
+.dark-toggle:hover { color: var(--text-primary); border-color: var(--border-active); }
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+.main {
+  margin-left: var(--sidebar-w);
+  padding-top: var(--topbar-h);
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.page {
+  display: none;
+  padding: 28px 28px 40px;
+  animation: pageIn 0.3s ease;
+}
+.page.active { display: block; }
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Page header */
+.page-header {
+  margin-bottom: 24px;
+}
+.page-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+.page-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  border-color: rgba(255,255,255,0.12);
+  background: var(--bg-card-hover);
+}
+.card-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-title span { color: var(--text-secondary); }
+
+/* ============================================================
+   KPI CARDS
+   ============================================================ */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition);
+  cursor: default;
+}
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--kpi-color, var(--primary));
+  border-radius: 0 0 var(--radius) var(--radius);
+  opacity: 0.7;
+}
+.kpi-card:hover {
+  border-color: var(--kpi-color, var(--primary));
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.kpi-icon {
+  font-size: 20px;
+  margin-bottom: 10px;
+  display: block;
+}
+.kpi-value {
+  font-size: 28px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.kpi-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.kpi-trend {
+  position: absolute;
+  top: 16px; right: 16px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+.kpi-trend.up { background: rgba(16,185,129,0.15); color: var(--success); }
+.kpi-trend.down { background: rgba(239,68,68,0.15); color: var(--danger); }
+.kpi-trend.flat { background: rgba(245,158,11,0.15); color: var(--warning); }
+
+/* Pulse animation on active KPI */
+.kpi-card.pulse-blue {
+  --kpi-color: var(--primary);
+  animation: pulseBorder 3s ease-in-out infinite;
+}
+@keyframes pulseBorder {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
+  50%       { box-shadow: 0 0 0 4px rgba(37,99,235,0.1); }
+}
+
+/* ============================================================
+   GRID LAYOUTS
+   ============================================================ */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-7030 { display: grid; grid-template-columns: 1.8fr 1fr; gap: 16px; }
+.grid-6040 { display: grid; grid-template-columns: 3fr 2fr; gap: 16px; }
+
+/* ============================================================
+   RAG STATUS
+   ============================================================ */
+.rag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+.rag::before {
+  content: '●';
+  font-size: 8px;
+}
+.rag.green { background: rgba(16,185,129,0.15); color: var(--success); }
+.rag.amber { background: rgba(245,158,11,0.15); color: var(--warning); }
+.rag.red   { background: rgba(239,68,68,0.15); color: var(--danger); }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  border: none;
+  outline: none;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+}
+.btn-primary:hover {
+  background: var(--primary-light);
+  box-shadow: 0 6px 20px rgba(37,99,235,0.4);
+  transform: translateY(-1px);
+}
+.btn-ghost {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border-color: var(--border-active);
+}
+.btn-accent {
+  background: rgba(6,182,212,0.15);
+  color: var(--accent);
+  border: 1px solid rgba(6,182,212,0.3);
+}
+.btn-accent:hover {
+  background: rgba(6,182,212,0.25);
+}
+.btn-sm { padding: 5px 12px; font-size: 12px; }
+.btn-lg { padding: 11px 22px; font-size: 14px; }
+.btn:focus-visible,
+.nav-item:focus-visible,
+.project-card:focus-visible,
+.filter-tab:focus-visible,
+.prompt-template-btn:focus-visible {
+  outline: 2px solid var(--primary-light);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   CHARTS (SVG-based, no libraries)
+   ============================================================ */
+.chart-wrap {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+.chart-label {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  fill: var(--text-muted);
+}
+.chart-line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Mini sparkline */
+.sparkline { display: inline-block; vertical-align: middle; }
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.data-table th {
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+.data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text-secondary);
+  vertical-align: middle;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+.data-table .td-primary { color: var(--text-primary); font-weight: 600; }
+.data-table .td-mono { font-family: var(--font-mono); font-size: 12px; }
+
+/* ============================================================
+   PROGRESS BAR
+   ============================================================ */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+
+/* ============================================================
+   INPUT / TEXTAREA
+   ============================================================ */
+.form-group { margin-bottom: 14px; }
+.form-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color var(--transition);
+  resize: vertical;
+}
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+.form-input::placeholder,
+.form-textarea::placeholder { color: var(--text-muted); }
+.form-select option { background: var(--bg-surface); }
+.form-textarea { min-height: 90px; }
+
+/* ============================================================
+   TAGS / CHIPS
+   ============================================================ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 600;
+  border: 1px solid;
+}
+.chip-blue  { background: rgba(37,99,235,0.12); color: var(--primary-light); border-color: rgba(37,99,235,0.2); }
+.chip-cyan  { background: rgba(6,182,212,0.12); color: var(--accent); border-color: rgba(6,182,212,0.2); }
+.chip-green { background: rgba(16,185,129,0.12); color: var(--success); border-color: rgba(16,185,129,0.2); }
+.chip-amber { background: rgba(245,158,11,0.12); color: var(--warning); border-color: rgba(245,158,11,0.2); }
+.chip-red   { background: rgba(239,68,68,0.12); color: var(--danger); border-color: rgba(239,68,68,0.2); }
+.chip-purple{ background: rgba(139,92,246,0.12); color: var(--purple); border-color: rgba(139,92,246,0.2); }
+
+/* ============================================================
+   AI THINKING ANIMATION
+   ============================================================ */
+.ai-thinking {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-accent);
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+.dots span {
+  display: inline-block;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: dotBounce 1.2s ease-in-out infinite;
+}
+.dots span:nth-child(2) { animation-delay: 0.15s; }
+.dots span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40%           { transform: scale(1); opacity: 1; }
+}
+
+/* ============================================================
+   OUTPUT BLOCK (AI responses)
+   ============================================================ */
+.output-block {
+  background: rgba(6,182,212,0.05);
+  border: 1px solid rgba(6,182,212,0.15);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 16px 18px;
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+.output-block h4 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+/* ============================================================
+   NOTIFICATIONS / TOAST
+   ============================================================ */
+#toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toast {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: 13px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: toastIn 0.3s ease;
+  min-width: 240px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.toast.success { border-left: 3px solid var(--success); }
+.toast.error   { border-left: 3px solid var(--danger); }
+.toast.info    { border-left: 3px solid var(--primary); }
+
+/* ============================================================
+   MOBILE TOGGLE
+   ============================================================ */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 14px; left: 14px;
+  z-index: 200;
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+}
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 99;
+  backdrop-filter: blur(2px);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .grid-7030, .grid-6040 { grid-template-columns: 1fr; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .project-cards-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 640px) {
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 110;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .mobile-menu-btn { display: flex; }
+  .main { margin-left: 0; }
+  .topbar { left: 0; padding-left: 56px; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .page { padding: 20px 16px 32px; }
+  .topbar-search { display: none; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .portfolio-toolbar { flex-direction: column; align-items: stretch; }
+  .project-meta-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+/* ============================================================
+   DASHBOARD SPECIFIC
+   ============================================================ */
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.activity-text { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+.activity-time { font-size: 10px; color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px; }
+
+/* Coming soon state */
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+  gap: 16px;
+}
+.coming-soon-icon { font-size: 48px; }
+.coming-soon h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.coming-soon p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  max-width: 340px;
+  line-height: 1.6;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
+
+/* Flex utilities */
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.gap-8 { gap: 8px; }
+.gap-12 { gap: 12px; }
+.mt-4 { margin-top: 4px; }
+.mt-8 { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+.mt-16 { margin-top: 16px; }
+.mb-16 { margin-bottom: 16px; }
+
+/* Score ring */
+.score-ring-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.score-ring-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Text */
+.text-success { color: var(--success); }
+.text-danger  { color: var(--danger); }
+.text-warning { color: var(--warning); }
+.text-accent  { color: var(--accent); }
+.text-muted   { color: var(--text-muted); }
+.text-mono    { font-family: var(--font-mono); }
+.text-sm      { font-size: 12px; }
+.text-xs      { font-size: 10px; }
+.font-bold    { font-weight: 700; }
+
+/* ============================================================
+   PROMPT TEMPLATE BUTTONS (Ask Delivery Intelligence page)
+   ============================================================ */
+.prompt-template-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  line-height: 1.4;
+}
+.prompt-template-btn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border-color: var(--border-active);
+  transform: translateX(2px);
+}
+
+/* AI Chat message bubbles */
+.msg-user {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  flex-direction: row-reverse;
+}
+.msg-user .msg-bubble {
+  background: linear-gradient(135deg, rgba(37,99,235,0.25), rgba(6,182,212,0.15));
+  border: 1px solid rgba(37,99,235,0.3);
+  border-radius: 10px 0 10px 10px;
+}
+.msg-ai {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.msg-ai .msg-bubble {
+  background: rgba(37,99,235,0.08);
+  border: 1px solid rgba(37,99,235,0.15);
+  border-radius: 0 10px 10px 10px;
+}
+.msg-bubble {
+  padding: 10px 14px;
+  max-width: 88%;
+  font-size: 12px;
+  color: var(--text-primary);
+  line-height: 1.65;
+}
+.msg-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.msg-time {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 5px;
+  font-family: var(--font-mono);
+}
+
+/* Output section styling inside modules */
+.ai-output-section { margin-top: 16px; }
+.ai-output-section h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.ai-output-section h4 {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 12px 0 6px;
+}
+.ai-output-section p, .ai-output-section li {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.ai-output-section ul { padding-left: 16px; }
+.ai-output-section li { margin-bottom: 4px; }
+.ai-rag-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-base);
+  border-radius: var(--radius-sm);
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+}
+
+/* ============================================================
+   PORTFOLIO DASHBOARD — ENHANCED
+   ============================================================ */
+.portfolio-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-tab {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: var(--font-ui);
+}
+.filter-tab:hover { border-color: var(--border-active); color: var(--text-primary); }
+.filter-tab.active {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  border-color: transparent;
+}
+
+.project-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+.project-card:hover { border-color: var(--border-active); }
+
+.project-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+.project-card-title { font-size: 15px; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+.project-card-client { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+.project-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+  margin: 14px 0;
+}
+.pm-item { display: flex; flex-direction: column; gap: 2px; }
+.pm-item .pm-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.pm-item .pm-value { font-size: 12px; font-weight: 600; color: var(--text-primary); font-family: var(--font-mono); }
+.pm-item .pm-value.plain { font-family: var(--font-ui); font-weight: 500; }
+
+.sprint-dots { display: flex; gap: 4px; align-items: center; }
+.sdot { width: 11px; height: 11px; border-radius: 3px; background: var(--border); }
+.sdot.done { background: var(--primary); }
+.sdot.active { background: var(--accent); }
+
+.budget-row { grid-column: 1 / -1; }
+.budget-row-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-bottom: 5px; }
+
+.project-highlight {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.project-footer {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.footer-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.footer-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 10px;
+  font-family: var(--font-mono);
+}
+.footer-badge.ok   { background: rgba(16,185,129,0.15); color: var(--success); }
+.footer-badge.warn { background: rgba(245,158,11,0.15); color: var(--warning); }
+.footer-badge.crit { background: rgba(239,68,68,0.15); color: var(--danger); }
+.footer-badge.info { background: rgba(37,99,235,0.15); color: var(--primary-light); }
+
+.empty-portfolio-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  gap: 10px;
+  color: var(--text-secondary);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+/* Timeline */
+.timeline-scroll { overflow-x: auto; }
+.timeline-table { width: 100%; border-collapse: collapse; min-width: 640px; }
+.timeline-table th {
+  text-align: left;
+  padding: 6px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+.timeline-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 12px;
+  color: var(--text-secondary);
+  vertical-align: middle;
+}
+.tl-track {
+  position: relative;
+  height: 20px;
+  background: var(--bg-base);
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+.tl-fill { position: absolute; top: 0; bottom: 0; border-radius: 4px; opacity: 0.85; }
+.tl-today-marker { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--danger); z-index: 2; }
+.tl-today-marker::before {
+  content: 'TODAY';
+  position: absolute;
+  top: -14px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--danger);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* Modal */
+.edi-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5,8,16,0.72);
+  backdrop-filter: blur(3px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.edi-modal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  max-width: 540px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.edi-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg-surface);
+}
+.edi-modal-close {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  width: 30px; height: 30px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.edi-modal-close:hover { color: var(--text-primary); border-color: var(--border-active); }
+.edi-modal-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+.edi-detail-row { display: flex; gap: 10px; }
+.edi-detail-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); min-width: 110px; padding-top: 1px; }
+.edi-detail-value { font-size: 12px; color: var(--text-primary); flex: 1; line-height: 1.6; }
+
+</style>
 </head>
 <body>
-  <div class="app-shell">
-    <header class="executive-header">
-      <nav class="top-nav" aria-label="Primary navigation">
-        <a class="brand" href="#top" aria-label="Executive Delivery Intelligence home">
-          <span class="brand-mark">EDI</span>
-          <span>
-            <strong>Executive Delivery Intelligence</strong>
-            <small>Portfolio Command Centre</small>
-          </span>
-        </a>
-        <div class="nav-links">
-          <a href="#portfolio">Portfolio</a>
-          <a href="#risks">Risks</a>
-          <a href="#decisions">Decisions</a>
-          <a href="#timeline">Timeline</a>
-        </div>
-      </nav>
 
-      <section id="top" class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">Executive portfolio health</p>
-          <h1>One clear view of delivery confidence, risks and decisions.</h1>
-          <p class="hero-text">A static GitHub Pages dashboard that consolidates portfolio status, budget progress, open risks and pending executive decisions into a responsive single-page view.</p>
-          <div class="hero-actions">
-            <a class="button primary" href="#portfolio">Review portfolio</a>
-            <a class="button secondary" href="#use-case">View use case</a>
-          </div>
-        </div>
-        <aside class="hero-panel" aria-label="Executive health summary">
-          <span class="status-pill amber">Attention required</span>
-          <h2>72%</h2>
-          <p>Delivery confidence across strategic programmes</p>
-          <div class="mini-grid">
-            <span><strong>6</strong> Projects</span>
-            <span><strong>£42.8m</strong> Budget</span>
-            <span><strong>11</strong> Open risks</span>
-          </div>
-        </aside>
-      </section>
-    </header>
+<!-- Mobile menu overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle navigation menu">☰</button>
 
-    <main>
-      <section id="use-case" class="use-case card">
-        <div>
-          <p class="eyebrow">Use Case 1</p>
-          <h2>Single view of portfolio health</h2>
-        </div>
-        <div class="use-case-grid">
-          <article>
-            <h3>Business Problem</h3>
-            <p>Executives receive information from multiple reports, dashboards and meetings, yet still don't have a single, clear view of portfolio health to support timely decision-making.</p>
-          </article>
-          <article>
-            <h3>User Story</h3>
-            <p>As a Program Director, I want a single view of portfolio health so that I can identify delivery risks and make informed decisions quickly.</p>
-          </article>
-        </div>
-      </section>
+<!-- ============================================================
+     SIDEBAR
+     ============================================================ -->
+<aside class="sidebar" id="sidebar" aria-label="Primary navigation">
 
-      <section id="portfolio" class="section-block">
-        <div class="section-heading">
-          <p class="eyebrow">Portfolio dashboard</p>
-          <h2>Summary metrics</h2>
-        </div>
-        <div id="summaryMetrics" class="metrics-grid" aria-live="polite"></div>
-      </section>
-
-      <section class="section-block">
-        <div class="section-heading">
-          <p class="eyebrow">Executive snapshots</p>
-          <h2>Latest delivery signals</h2>
-        </div>
-        <div id="snapshotCards" class="snapshot-grid"></div>
-      </section>
-
-      <section class="section-block">
-        <div class="section-heading with-actions">
-          <div>
-            <p class="eyebrow">Project portfolio</p>
-            <h2>Six active initiatives</h2>
-          </div>
-          <div class="rag-tabs" role="tablist" aria-label="Filter projects by RAG status">
-            <button class="tab active" type="button" data-filter="all">All</button>
-            <button class="tab" type="button" data-filter="green">Green</button>
-            <button class="tab" type="button" data-filter="amber">Amber</button>
-            <button class="tab" type="button" data-filter="red">Red</button>
-          </div>
-        </div>
-        <div id="projectCards" class="projects-grid"></div>
-      </section>
-
-      <section class="two-column">
-        <section id="risks" class="card list-card">
-          <div class="section-heading compact">
-            <p class="eyebrow">Open risks</p>
-            <h2>Items requiring attention</h2>
-          </div>
-          <div id="riskList" class="stacked-list"></div>
-        </section>
-
-        <section id="decisions" class="card list-card">
-          <div class="section-heading compact">
-            <p class="eyebrow">Decisions pending</p>
-            <h2>Executive actions</h2>
-          </div>
-          <div id="decisionList" class="stacked-list"></div>
-        </section>
-      </section>
-
-      <section id="timeline" class="section-block card">
-        <div class="section-heading compact">
-          <p class="eyebrow">Programme timeline</p>
-          <h2>Upcoming milestones</h2>
-        </div>
-        <div id="timelineList" class="timeline"></div>
-      </section>
-    </main>
+  <!-- Brand -->
+  <div class="sidebar-brand">
+    <div class="brand-logo">
+      <div class="brand-icon" aria-hidden="true">⚡</div>
+      <div>
+        <div class="brand-name">Executive Delivery<br>Intelligence</div>
+      </div>
+    </div>
+    <div class="brand-tag">Bharani Bussari · v1.0</div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Nav: Core -->
+  <div class="nav-section">
+    <div class="nav-section-label">Core</div>
+    <div class="nav-item active" onclick="navigate('dashboard', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('dashboard', this);}">
+      <span class="nav-icon" aria-hidden="true">📊</span>
+      <span>Dashboard</span>
+    </div>
+    <div class="nav-item" onclick="navigate('portfolio', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('portfolio', this);}">
+      <span class="nav-icon" aria-hidden="true">📁</span>
+      <span>Portfolio Dashboard</span>
+      <span class="nav-badge blue">6</span>
+    </div>
+    <div class="nav-item" onclick="navigate('risk', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('risk', this);}">
+      <span class="nav-icon" aria-hidden="true">🎯</span>
+      <span>AI Risk Radar</span>
+      <span class="nav-badge">3</span>
+    </div>
+  </div>
+
+  <!-- Nav: AI Copilots -->
+  <div class="nav-section">
+    <div class="nav-section-label">AI Copilots</div>
+    <div class="nav-item" onclick="navigate('steering', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('steering', this);}">
+      <span class="nav-icon" aria-hidden="true">🧭</span>
+      <span>Steering Committee</span>
+    </div>
+    <div class="nav-item" onclick="navigate('statusgen', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('statusgen', this);}">
+      <span class="nav-icon" aria-hidden="true">📝</span>
+      <span>Status Generator</span>
+    </div>
+    <div class="nav-item" onclick="navigate('raid', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('raid', this);}">
+      <span class="nav-icon" aria-hidden="true">🔍</span>
+      <span>RAID Intelligence</span>
+    </div>
+    <div class="nav-item" onclick="navigate('stakeholder', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('stakeholder', this);}">
+      <span class="nav-icon" aria-hidden="true">🕸️</span>
+      <span>Stakeholder Intel</span>
+    </div>
+  </div>
+
+  <!-- Nav: Analytics -->
+  <div class="nav-section">
+    <div class="nav-section-label">Analytics</div>
+    <div class="nav-item" onclick="navigate('vendor', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('vendor', this);}">
+      <span class="nav-icon" aria-hidden="true">🤝</span>
+      <span>Vendor Dashboard</span>
+    </div>
+    <div class="nav-item" onclick="navigate('budget', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('budget', this);}">
+      <span class="nav-icon" aria-hidden="true">💰</span>
+      <span>Budget Forecast AI</span>
+    </div>
+    <div class="nav-item" onclick="navigate('delivery', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('delivery', this);}">
+      <span class="nav-icon" aria-hidden="true">🚀</span>
+      <span>Delivery Predictor</span>
+    </div>
+  </div>
+
+  <!-- Nav: Assistant -->
+  <div class="nav-section">
+    <div class="nav-section-label">Assistant</div>
+    <div class="nav-item" onclick="navigate('askpd', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('askpd', this);}">
+      <span class="nav-icon" aria-hidden="true">🤖</span>
+      <span>Ask Delivery Intelligence</span>
+      <span class="nav-badge green">AI</span>
+    </div>
+  </div>
+
+  <!-- Nav: About -->
+  <div class="nav-section">
+    <div class="nav-section-label">About</div>
+    <div class="nav-item" onclick="navigate('about', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('about', this);}">
+      <span class="nav-icon" aria-hidden="true">👤</span>
+      <span>About Bharani</span>
+    </div>
+    <div class="nav-item" onclick="navigate('contact', this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('contact', this);}">
+      <span class="nav-icon" aria-hidden="true">✉️</span>
+      <span>Contact</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="user-avatar" aria-hidden="true">BB</div>
+      <div class="user-info">
+        <div class="user-name">Bharani Bussari</div>
+        <div class="user-role">Senior Project Manager | AI-Enabled Delivery</div>
+      </div>
+      <div class="user-status" aria-hidden="true"></div>
+    </div>
+  </div>
+
+</aside>
+
+<!-- ============================================================
+     TOPBAR
+     ============================================================ -->
+<header class="topbar">
+  <nav class="topbar-breadcrumb" aria-label="Breadcrumb">
+    <span>Suite</span>
+    <span class="breadcrumb-sep" aria-hidden="true">›</span>
+    <span class="breadcrumb-current" id="breadcrumbCurrent">Dashboard</span>
+  </nav>
+
+  <div class="topbar-search">
+    <span class="search-icon" aria-hidden="true">🔍</span>
+    <input type="text" placeholder="Search modules, projects..." id="globalSearch" aria-label="Search modules and projects">
+  </div>
+
+  <div class="topbar-actions">
+    <div class="topbar-btn" title="Notifications" role="button" tabindex="0" aria-label="Notifications: 3 new risk alerts" onclick="showToast('3 new risk alerts flagged by AI', 'error')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showToast('3 new risk alerts flagged by AI', 'error');}">
+      🔔
+      <span class="notif-dot" aria-hidden="true"></span>
+    </div>
+    <div class="topbar-btn" title="Export" role="button" tabindex="0" aria-label="Export dashboard data" onclick="showToast('Exporting dashboard data...', 'info')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showToast('Exporting dashboard data...', 'info');}">📤</div>
+    <div class="topbar-btn" title="Settings" role="button" tabindex="0" aria-label="Settings">⚙️</div>
+    <button class="dark-toggle" onclick="showToast('Light mode coming soon', 'info')">🌙 Dark</button>
+  </div>
+</header>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<main class="main">
+
+  <!-- ========================
+       PAGE: DASHBOARD
+       ======================== -->
+  <section class="page active" id="page-dashboard">
+    <div class="page-header flex-between">
+      <div>
+        <h1 class="page-title">Executive Delivery Command Centre</h1>
+        <div class="page-subtitle">Portfolio visibility, delivery governance and executive decision support.</div>
+      </div>
+      <div class="flex gap-8">
+        <button class="btn btn-ghost btn-sm" onclick="showToast('Refreshing data...', 'info')">🔄 Refresh</button>
+        <button class="btn btn-primary btn-sm" onclick="navigate('steering', document.querySelector('[onclick*=steering]'))">+ New Report</button>
+      </div>
+    </div>
+
+    <!-- KPI Row -->
+    <div class="kpi-grid">
+      <div class="kpi-card pulse-blue" style="--kpi-color:var(--primary)">
+        <span class="kpi-icon" aria-hidden="true">📁</span>
+        <div class="kpi-value">4</div>
+        <div class="kpi-label">Programs Managed</div>
+        <span class="kpi-trend up">+1 YTD</span>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--success)">
+        <span class="kpi-icon" aria-hidden="true">💚</span>
+        <div class="kpi-value">87<span style="font-size:16px;color:var(--text-muted)">%</span></div>
+        <div class="kpi-label">Program Health</div>
+        <span class="kpi-trend up">+4%</span>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--accent)">
+        <span class="kpi-icon" aria-hidden="true">💰</span>
+        <div class="kpi-value">$6M</div>
+        <div class="kpi-label">Budget Managed</div>
+        <span class="kpi-trend flat">On track</span>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--danger)">
+        <span class="kpi-icon" aria-hidden="true">⚠️</span>
+        <div class="kpi-value">3</div>
+        <div class="kpi-label">Open Risks</div>
+        <span class="kpi-trend down">↑ from 1</span>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--purple)">
+        <span class="kpi-icon" aria-hidden="true">👥</span>
+        <div class="kpi-value">35</div>
+        <div class="kpi-label">Stakeholders</div>
+        <span class="kpi-trend up">+5</span>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--accent)">
+        <span class="kpi-icon" aria-hidden="true">📋</span>
+        <div class="kpi-value">12</div>
+        <div class="kpi-label">Exec Reports</div>
+        <span class="kpi-trend up">This Qtr</span>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--success)">
+        <span class="kpi-icon" aria-hidden="true">🤝</span>
+        <div class="kpi-value">94<span style="font-size:16px;color:var(--text-muted)">%</span></div>
+        <div class="kpi-label">Vendor Performance</div>
+        <span class="kpi-trend up">+2%</span>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--success)">
+        <span class="kpi-icon" aria-hidden="true">🎯</span>
+        <div class="kpi-value">5/5</div>
+        <div class="kpi-label">CSAT Score</div>
+        <span class="kpi-trend up">All clients</span>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid-7030 mb-16">
+      <!-- Portfolio Health Chart -->
+      <div class="card">
+        <div class="card-title">📈 <span>Portfolio Health Trend</span> <span class="chip chip-green" style="margin-left:auto">Q2 2025</span></div>
+        <svg class="chart-wrap" viewBox="0 0 560 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Portfolio health trend line chart, trending upward from 63 percent in January to 89 percent in July">
+          <defs>
+            <linearGradient id="healthGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2563EB" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#2563EB" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Grid lines -->
+          <line x1="40" y1="20" x2="540" y2="20" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+          <line x1="40" y1="55" x2="540" y2="55" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+          <line x1="40" y1="90" x2="540" y2="90" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+          <line x1="40" y1="125" x2="540" y2="125" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+          <!-- Y labels -->
+          <text x="32" y="24" class="chart-label" text-anchor="end">100%</text>
+          <text x="32" y="59" class="chart-label" text-anchor="end">75%</text>
+          <text x="32" y="94" class="chart-label" text-anchor="end">50%</text>
+          <text x="32" y="129" class="chart-label" text-anchor="end">25%</text>
+          <!-- Health line: values across Jan-Jun -->
+          <path d="M60,95 L140,82 L220,75 L300,68 L380,55 L460,40 L540,30"
+                class="chart-line" stroke="#2563EB" stroke-width="2.5"/>
+          <!-- Fill area -->
+          <path d="M60,95 L140,82 L220,75 L300,68 L380,55 L460,40 L540,30 L540,130 L60,130 Z"
+                fill="url(#healthGrad)"/>
+          <!-- Second line: Budget utilisation -->
+          <path d="M60,100 L140,95 L220,88 L300,78 L380,72 L460,65 L540,60"
+                class="chart-line" stroke="#06B6D4" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <!-- X labels -->
+          <text x="60"  y="150" class="chart-label" text-anchor="middle">Jan</text>
+          <text x="140" y="150" class="chart-label" text-anchor="middle">Feb</text>
+          <text x="220" y="150" class="chart-label" text-anchor="middle">Mar</text>
+          <text x="300" y="150" class="chart-label" text-anchor="middle">Apr</text>
+          <text x="380" y="150" class="chart-label" text-anchor="middle">May</text>
+          <text x="460" y="150" class="chart-label" text-anchor="middle">Jun</text>
+          <text x="540" y="150" class="chart-label" text-anchor="middle">Jul</text>
+          <!-- Dots -->
+          <circle cx="60" cy="95" r="4" fill="#2563EB"/>
+          <circle cx="540" cy="30" r="5" fill="#2563EB" stroke="#0A0E1A" stroke-width="2"/>
+          <!-- Legend -->
+          <line x1="50" y1="15" x2="70" y2="15" stroke="#2563EB" stroke-width="2.5"/>
+          <text x="74" y="19" class="chart-label" font-size="9">Program Health</text>
+          <line x1="160" y1="15" x2="180" y2="15" stroke="#06B6D4" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="184" y="19" class="chart-label" font-size="9">Budget Util.</text>
+        </svg>
+      </div>
+
+      <!-- Risk Trend -->
+      <div class="card">
+        <div class="card-title">🎯 <span>Risk Trend</span></div>
+        <svg class="chart-wrap" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Open risk items bar chart by month, February through June">
+          <defs>
+            <linearGradient id="riskGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#EF4444" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#EF4444" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Bars -->
+          <rect x="20"  y="70"  width="22" height="55" rx="3" fill="rgba(245,158,11,0.3)"/>
+          <rect x="52"  y="50"  width="22" height="75" rx="3" fill="rgba(245,158,11,0.4)"/>
+          <rect x="84"  y="40"  width="22" height="85" rx="3" fill="rgba(239,68,68,0.4)"/>
+          <rect x="116" y="55"  width="22" height="70" rx="3" fill="rgba(239,68,68,0.35)"/>
+          <rect x="148" y="80"  width="22" height="45" rx="3" fill="rgba(16,185,129,0.4)"/>
+          <!-- Labels -->
+          <text x="31"  y="138" class="chart-label" text-anchor="middle" font-size="9">Feb</text>
+          <text x="63"  y="138" class="chart-label" text-anchor="middle" font-size="9">Mar</text>
+          <text x="95"  y="138" class="chart-label" text-anchor="middle" font-size="9">Apr</text>
+          <text x="127" y="138" class="chart-label" text-anchor="middle" font-size="9">May</text>
+          <text x="159" y="138" class="chart-label" text-anchor="middle" font-size="9">Jun</text>
+          <!-- Values -->
+          <text x="31"  y="64"  class="chart-label" text-anchor="middle" font-size="9" fill="#F59E0B">2</text>
+          <text x="63"  y="44"  class="chart-label" text-anchor="middle" font-size="9" fill="#F59E0B">3</text>
+          <text x="95"  y="34"  class="chart-label" text-anchor="middle" font-size="9" fill="#EF4444">4</text>
+          <text x="127" y="49"  class="chart-label" text-anchor="middle" font-size="9" fill="#EF4444">3</text>
+          <text x="159" y="74"  class="chart-label" text-anchor="middle" font-size="9" fill="#10B981">1</text>
+          <text x="100" y="20" class="chart-label" text-anchor="middle" font-size="10">Open Risk Items</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Active Projects + Activity -->
+    <div class="grid-6040">
+      <!-- Active projects table -->
+      <div class="card">
+        <div class="card-title flex-between">
+          📁 <span>Active Programs</span>
+          <button class="btn btn-ghost btn-sm" onclick="navigate('portfolio', document.querySelector('[onclick*=portfolio]'))">View All →</button>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col">Program</th>
+              <th scope="col">Client</th>
+              <th scope="col">RAG</th>
+              <th scope="col">Progress</th>
+              <th scope="col">Budget</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-primary">VGA Agentforce POC</td>
+              <td>Volkswagen AU</td>
+              <td><span class="rag green">GREEN</span></td>
+              <td>
+                <div class="progress-bar" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-label="Progress 78 percent" style="width:120px">
+                  <div class="progress-fill" style="width:78%;background:var(--success)"></div>
+                </div>
+              </td>
+              <td class="td-mono">$2.1M</td>
+            </tr>
+            <tr>
+              <td class="td-primary">Data Cloud Migration</td>
+              <td>VWFS</td>
+              <td><span class="rag amber">AMBER</span></td>
+              <td>
+                <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" aria-label="Progress 55 percent" style="width:120px">
+                  <div class="progress-fill" style="width:55%;background:var(--warning)"></div>
+                </div>
+              </td>
+              <td class="td-mono">$1.8M</td>
+            </tr>
+            <tr>
+              <td class="td-primary">Einstein Analytics</td>
+              <td>Audi AU</td>
+              <td><span class="rag green">GREEN</span></td>
+              <td>
+                <div class="progress-bar" role="progressbar" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100" aria-label="Progress 92 percent" style="width:120px">
+                  <div class="progress-fill" style="width:92%;background:var(--success)"></div>
+                </div>
+              </td>
+              <td class="td-mono">$1.4M</td>
+            </tr>
+            <tr>
+              <td class="td-primary">eShop Aftersales</td>
+              <td>Skoda AU</td>
+              <td><span class="rag red">RED</span></td>
+              <td>
+                <div class="progress-bar" role="progressbar" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100" aria-label="Progress 34 percent" style="width:120px">
+                  <div class="progress-fill" style="width:34%;background:var(--danger)"></div>
+                </div>
+              </td>
+              <td class="td-mono">$0.7M</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Activity Feed -->
+      <div class="card">
+        <div class="card-title">⚡ <span>Live Activity</span></div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:var(--success)" aria-hidden="true"></div>
+          <div>
+            <div class="activity-text">Agentforce POC milestone <strong>M3 completed</strong> — test-drive booking live</div>
+            <div class="activity-time">2 min ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:var(--danger)" aria-hidden="true"></div>
+          <div>
+            <div class="activity-text">Risk <strong>R-07 escalated</strong> to Amber — VWFS data governance sign-off pending</div>
+            <div class="activity-time">34 min ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:var(--primary)" aria-hidden="true"></div>
+          <div>
+            <div class="activity-text">Steering committee report <strong>generated</strong> for Audi Q2 review</div>
+            <div class="activity-time">1 hr ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:var(--warning)" aria-hidden="true"></div>
+          <div>
+            <div class="activity-text">Budget variance flagged on eShop — <strong>-$42K</strong> against forecast</div>
+            <div class="activity-time">3 hrs ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:var(--accent)" aria-hidden="true"></div>
+          <div>
+            <div class="activity-text">AI generated <strong>16 user stories</strong> from VGA workshop notes</div>
+            <div class="activity-time">Yesterday</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delivery Forecast mini -->
+    <div class="card mt-16">
+      <div class="card-title">🚀 <span>Delivery Forecast — All Programs</span>
+        <span class="chip chip-blue" style="margin-left:auto">AI Confidence: 83%</span>
+      </div>
+      <svg class="chart-wrap" viewBox="0 0 700 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Delivery burnup forecast chart across quarters, trending toward target">
+        <defs>
+          <linearGradient id="forecastGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#10B981" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- Actual burnup -->
+        <path d="M40,100 L140,90 L240,78 L340,62 L440,48 L540,35 L640,22"
+              class="chart-line" stroke="#10B981" stroke-width="2"/>
+        <path d="M40,100 L140,90 L240,78 L340,62 L440,48 L540,35 L640,22 L640,105 L40,105 Z"
+              fill="url(#forecastGrad)"/>
+        <!-- Forecast continuation (dashed) -->
+        <path d="M640,22 L700,12" class="chart-line" stroke="#10B981" stroke-width="2" stroke-dasharray="5,3"/>
+        <!-- Target line -->
+        <line x1="40" y1="10" x2="700" y2="10" stroke="rgba(37,99,235,0.3)" stroke-width="1" stroke-dasharray="8,4"/>
+        <text x="695" y="8" class="chart-label" text-anchor="end" font-size="9" fill="#2563EB">Target</text>
+        <!-- X labels -->
+        <text x="40"  y="115" class="chart-label" text-anchor="middle" font-size="9">Q1</text>
+        <text x="173" y="115" class="chart-label" text-anchor="middle" font-size="9">Q2</text>
+        <text x="307" y="115" class="chart-label" text-anchor="middle" font-size="9">Q3</text>
+        <text x="440" y="115" class="chart-label" text-anchor="middle" font-size="9">Q4</text>
+        <text x="573" y="115" class="chart-label" text-anchor="middle" font-size="9">Q1'26</text>
+        <!-- Confidence band -->
+        <path d="M440,44 L640,18" stroke="rgba(16,185,129,0.2)" stroke-width="12" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ========================
+       PAGE: PORTFOLIO (Enhanced)
+       ======================== -->
+  <section class="page" id="page-portfolio">
+    <div class="page-header flex-between">
+      <div>
+        <h1 class="page-title">Portfolio Dashboard</h1>
+        <div class="page-subtitle">Reporting period: 16–28 June 2026 · Last updated just now · 6 active projects</div>
+      </div>
+      <div class="flex gap-8">
+        <button class="btn btn-ghost btn-sm" onclick="refreshPortfolio()">🔄 Refresh</button>
+        <button class="btn btn-ghost btn-sm" onclick="exportPortfolioCSV()">📤 Export Portfolio</button>
+        <button class="btn btn-primary btn-sm" onclick="showAddProjectModal()">+ Add Project</button>
+      </div>
+    </div>
+
+    <!-- Executive Summary Metrics -->
+    <div class="kpi-grid" id="portfolioKPIGrid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="kpi-card" style="--kpi-color:var(--primary)">
+        <span class="kpi-icon" aria-hidden="true">📁</span>
+        <div class="kpi-value">6</div>
+        <div class="kpi-label">Total Projects</div>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--success)">
+        <span class="kpi-icon" aria-hidden="true">💚</span>
+        <div class="kpi-value">4</div>
+        <div class="kpi-label">Green Projects</div>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--warning)">
+        <span class="kpi-icon" aria-hidden="true">🟡</span>
+        <div class="kpi-value">1</div>
+        <div class="kpi-label">Amber Projects</div>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--danger)">
+        <span class="kpi-icon" aria-hidden="true">🔴</span>
+        <div class="kpi-value">1</div>
+        <div class="kpi-label">Red Projects</div>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--accent)">
+        <span class="kpi-icon" aria-hidden="true">💰</span>
+        <div class="kpi-value">$1.92M</div>
+        <div class="kpi-label">Total Portfolio Budget</div>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--primary)">
+        <span class="kpi-icon" aria-hidden="true">📊</span>
+        <div class="kpi-value">68<span style="font-size:16px;color:var(--text-muted)">%</span></div>
+        <div class="kpi-label">Budget Consumed</div>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--danger)">
+        <span class="kpi-icon" aria-hidden="true">⚠️</span>
+        <div class="kpi-value">4</div>
+        <div class="kpi-label">Open Risks</div>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--warning)">
+        <span class="kpi-icon" aria-hidden="true">🗳️</span>
+        <div class="kpi-value">2</div>
+        <div class="kpi-label">Decisions Pending</div>
+      </div>
+    </div>
+
+    <!-- Filters + Search -->
+    <div class="portfolio-toolbar">
+      <div class="filter-tabs" role="tablist" aria-label="Filter projects by RAG status">
+        <button class="filter-tab active" id="ftab-all" onclick="setPortfolioFilter('all', this)" role="tab" aria-selected="true">All Projects</button>
+        <button class="filter-tab" id="ftab-green" onclick="setPortfolioFilter('green', this)" role="tab" aria-selected="false">Green</button>
+        <button class="filter-tab" id="ftab-amber" onclick="setPortfolioFilter('amber', this)" role="tab" aria-selected="false">Amber</button>
+        <button class="filter-tab" id="ftab-red" onclick="setPortfolioFilter('red', this)" role="tab" aria-selected="false">Red</button>
+      </div>
+      <input type="text" class="form-input" style="max-width:240px" placeholder="🔍 Search projects..." id="portfolioSearchInput" aria-label="Search projects by name or client" oninput="setPortfolioSearch(this.value)">
+    </div>
+
+    <!-- Project Cards Grid -->
+    <div id="portfolioGrid" class="project-cards-grid" aria-live="polite"></div>
+
+    <!-- Programme Timeline -->
+    <div class="card">
+      <div class="card-title">🗓️ <span>Programme Timeline</span> <span class="chip chip-blue" style="margin-left:auto">Jan 2026 – Apr 2027</span></div>
+      <div class="timeline-scroll">
+        <table class="timeline-table">
+          <thead>
+            <tr>
+              <th scope="col">Project</th>
+              <th scope="col">Start</th>
+              <th scope="col">Go-Live</th>
+              <th scope="col">Timeline</th>
+            </tr>
+          </thead>
+          <tbody id="portfolioTimelineBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       PAGE: RISK RADAR (Phase 2)
+       ======================== -->
+  <section class="page" id="page-risk">
+    <div class="page-header flex-between">
+      <div>
+        <div class="page-title">AI Risk Radar</div>
+        <div class="page-subtitle">Interactive heat map · Probability/impact matrix · AI mitigation engine</div>
+      </div>
+      <div class="flex gap-8">
+        <button class="btn btn-ghost btn-sm" onclick="showToast('Exporting RAID log as CSV...','info')">📤 Export RAID</button>
+        <button class="btn btn-primary btn-sm" onclick="showToast('Risk logging coming in next update','info')">+ Log Risk</button>
+      </div>
+    </div>
+    <div class="grid-6040" style="margin-bottom:20px">
+      <div class="card">
+        <div class="card-title">🎯 <span>Risk Heat Map — Plotted Active Risks</span></div>
+        <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" style="width:100%" role="img" aria-label="Probability by impact risk heat map with three active risks plotted">
+          <text x="14" y="190" fill="#475569" font-size="10" font-family="Inter" text-anchor="middle" transform="rotate(-90,14,190)">PROBABILITY</text>
+          <text x="290" y="355" fill="#475569" font-size="10" font-family="Inter" text-anchor="middle">IMPACT →</text>
+          <rect x="40" y="20" width="80" height="60" rx="4" fill="rgba(245,158,11,0.25)"/>
+          <rect x="128" y="20" width="80" height="60" rx="4" fill="rgba(245,158,11,0.35)"/>
+          <rect x="216" y="20" width="80" height="60" rx="4" fill="rgba(239,68,68,0.35)"/>
+          <rect x="304" y="20" width="80" height="60" rx="4" fill="rgba(239,68,68,0.5)"/>
+          <rect x="392" y="20" width="68" height="60" rx="4" fill="rgba(239,68,68,0.65)"/>
+          <rect x="40" y="88" width="80" height="60" rx="4" fill="rgba(16,185,129,0.2)"/>
+          <rect x="128" y="88" width="80" height="60" rx="4" fill="rgba(245,158,11,0.25)"/>
+          <rect x="216" y="88" width="80" height="60" rx="4" fill="rgba(245,158,11,0.35)"/>
+          <rect x="304" y="88" width="80" height="60" rx="4" fill="rgba(239,68,68,0.45)"/>
+          <rect x="392" y="88" width="68" height="60" rx="4" fill="rgba(239,68,68,0.55)"/>
+          <rect x="40" y="156" width="80" height="60" rx="4" fill="rgba(16,185,129,0.15)"/>
+          <rect x="128" y="156" width="80" height="60" rx="4" fill="rgba(16,185,129,0.2)"/>
+          <rect x="216" y="156" width="80" height="60" rx="4" fill="rgba(245,158,11,0.3)"/>
+          <rect x="304" y="156" width="80" height="60" rx="4" fill="rgba(245,158,11,0.4)"/>
+          <rect x="392" y="156" width="68" height="60" rx="4" fill="rgba(239,68,68,0.4)"/>
+          <rect x="40" y="224" width="80" height="60" rx="4" fill="rgba(16,185,129,0.1)"/>
+          <rect x="128" y="224" width="80" height="60" rx="4" fill="rgba(16,185,129,0.15)"/>
+          <rect x="216" y="224" width="80" height="60" rx="4" fill="rgba(16,185,129,0.2)"/>
+          <rect x="304" y="224" width="80" height="60" rx="4" fill="rgba(245,158,11,0.25)"/>
+          <rect x="392" y="224" width="68" height="60" rx="4" fill="rgba(245,158,11,0.35)"/>
+          <rect x="40" y="292" width="80" height="50" rx="4" fill="rgba(16,185,129,0.08)"/>
+          <rect x="128" y="292" width="80" height="50" rx="4" fill="rgba(16,185,129,0.1)"/>
+          <rect x="216" y="292" width="80" height="50" rx="4" fill="rgba(16,185,129,0.15)"/>
+          <rect x="304" y="292" width="80" height="50" rx="4" fill="rgba(16,185,129,0.2)"/>
+          <rect x="392" y="292" width="68" height="50" rx="4" fill="rgba(245,158,11,0.2)"/>
+          <circle cx="344" cy="50" r="13" fill="#EF4444" opacity="0.9"/>
+          <text x="344" y="55" fill="white" font-size="9" font-weight="700" text-anchor="middle">R01</text>
+          <circle cx="256" cy="118" r="13" fill="#F59E0B" opacity="0.9"/>
+          <text x="256" y="123" fill="white" font-size="9" font-weight="700" text-anchor="middle">R02</text>
+          <circle cx="344" cy="186" r="13" fill="#F59E0B" opacity="0.9"/>
+          <text x="344" y="191" fill="white" font-size="9" font-weight="700" text-anchor="middle">R03</text>
+          <text x="30" y="55"  fill="#475569" font-size="9" text-anchor="end">5</text>
+          <text x="30" y="123" fill="#475569" font-size="9" text-anchor="end">4</text>
+          <text x="30" y="191" fill="#475569" font-size="9" text-anchor="end">3</text>
+          <text x="30" y="259" fill="#475569" font-size="9" text-anchor="end">2</text>
+          <text x="30" y="322" fill="#475569" font-size="9" text-anchor="end">1</text>
+          <text x="80"  y="350" fill="#475569" font-size="9" text-anchor="middle">1</text>
+          <text x="168" y="350" fill="#475569" font-size="9" text-anchor="middle">2</text>
+          <text x="256" y="350" fill="#475569" font-size="9" text-anchor="middle">3</text>
+          <text x="344" y="350" fill="#475569" font-size="9" text-anchor="middle">4</text>
+          <text x="424" y="350" fill="#475569" font-size="9" text-anchor="middle">5</text>
+        </svg>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="kpi-card" style="--kpi-color:var(--danger)"><span class="kpi-icon" aria-hidden="true">🔴</span><div class="kpi-value">1</div><div class="kpi-label">Critical Risks</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--warning)"><span class="kpi-icon" aria-hidden="true">🟡</span><div class="kpi-value">2</div><div class="kpi-label">High Risks</div></div>
+        <div class="kpi-card" style="--kpi-color:var(--success)"><span class="kpi-icon" aria-hidden="true">🟢</span><div class="kpi-value">0</div><div class="kpi-label">Low Risks</div></div>
+        <div class="card" style="background:rgba(6,182,212,0.05);border-color:rgba(6,182,212,0.2)">
+          <div class="card-title" style="color:var(--accent)">🤖 AI Priority Action</div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.6">R-01 is your critical path blocker. Escalate to Sponsor today with a pre-agreed 5-day extension protocol to avoid R-03 budget cascade. AI confidence: 91%.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🗂️ <span>Risk Register</span></div>
+      <table class="data-table">
+        <thead><tr><th scope="col">ID</th><th scope="col">Risk Description</th><th scope="col">Program</th><th scope="col">P</th><th scope="col">I</th><th scope="col">Score</th><th scope="col">Owner</th><th scope="col">AI Mitigation</th><th scope="col">Trend</th></tr></thead>
+        <tbody>
+          <tr><td class="td-mono" style="color:var(--danger)">R-01</td><td class="td-primary">Legal sign-off delay on VWFS data migration</td><td>Data Cloud</td><td class="td-mono">5</td><td class="td-mono">4</td><td><span class="rag red">20 CRIT</span></td><td class="td-mono">Bharani</td><td style="font-size:11px;color:var(--text-secondary)">Escalate to CISO — 5-day extension protocol</td><td style="color:var(--danger);font-size:16px">↑</td></tr>
+          <tr><td class="td-mono" style="color:var(--warning)">R-02</td><td class="td-primary">eShop scope creep — SAP integration complexity underestimated</td><td>eShop</td><td class="td-mono">4</td><td class="td-mono">3</td><td><span class="rag amber">12 HIGH</span></td><td class="td-mono">Tech Lead</td><td style="font-size:11px;color:var(--text-secondary)">CR raised, steering committee review Thu</td><td style="color:var(--warning);font-size:16px">→</td></tr>
+          <tr><td class="td-mono" style="color:var(--warning)">R-03</td><td class="td-primary">Budget variance -$42K on eShop delivery track</td><td>eShop</td><td class="td-mono">3</td><td class="td-mono">4</td><td><span class="rag amber">12 HIGH</span></td><td class="td-mono">Bharani</td><td style="font-size:11px;color:var(--text-secondary)">Recovery plan drafted — phase defer approved by sponsor</td><td style="color:var(--success);font-size:16px">↓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========================
+       PAGE: STEERING (Phase 3)
+       ======================== -->
+  <section class="page" id="page-steering">
+    <div class="page-header flex-between">
+      <div>
+        <div class="page-title">Steering Committee Copilot</div>
+        <div class="page-subtitle">Paste your inputs · AI generates the full executive pack in seconds</div>
+      </div>
+      <div class="flex gap-8">
+        <button class="btn btn-ghost btn-sm" onclick="clearSteeringForm()">🗑️ Clear</button>
+        <button class="btn btn-primary btn-sm" onclick="generateSteeringReport()">⚡ Generate Report</button>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-bottom:20px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="card">
+          <div class="card-title">📋 <span>Program Inputs</span></div>
+          <div class="form-group"><label class="form-label" for="sc-project">Project Name</label><input class="form-input" id="sc-project" placeholder="e.g. VGA Agentforce POC" value="VGA Agentforce POC"></div>
+          <div class="form-group"><label class="form-label" for="sc-period">Reporting Period</label><input class="form-input" id="sc-period" placeholder="e.g. Q2 2025 — Week 24" value="Q2 2025 — Week 24"></div>
+          <div class="form-group"><label class="form-label" for="sc-budget">Budget Status</label><input class="form-input" id="sc-budget" placeholder="e.g. $2.1M approved, $1.4M spent, on track" value="$2.1M approved, $1.4M spent, on track"></div>
+          <div class="form-group"><label class="form-label" for="sc-schedule">Schedule Status</label><input class="form-input" id="sc-schedule" placeholder="e.g. On schedule — M3 complete, M4 in progress" value="On schedule — M3 complete, M4 in progress"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">⚠️ <span>RAID Summary</span></div>
+          <div class="form-group"><label class="form-label" for="sc-risks">Top Risks</label><textarea class="form-textarea" id="sc-risks" style="min-height:70px">R-01: Legal sign-off delay (P5/I4) — escalated to CISO&#10;R-02: Scope creep on SAP integration (P4/I3)</textarea></div>
+          <div class="form-group"><label class="form-label" for="sc-issues">Key Issues &amp; Dependencies</label><textarea class="form-textarea" id="sc-issues" style="min-height:60px">I-01: VWFS data governance team sign-off pending EOW&#10;D-01: Data Cloud schema required before agent training</textarea></div>
+          <div class="form-group"><label class="form-label" for="sc-vendors">Vendor Updates</label><textarea class="form-textarea" id="sc-vendors" style="min-height:60px">MuleSoft: On track, SLA 99.2%&#10;SAP SI: Minor delay — integration spec finalised</textarea></div>
+          <div class="form-group"><label class="form-label" for="sc-decisions">Decisions Required</label><textarea class="form-textarea" id="sc-decisions" style="min-height:60px">1. Approve 5-day legal sign-off extension&#10;2. Approve $42K budget CR for eShop recovery</textarea></div>
+        </div>
+      </div>
+      <div>
+        <div class="card" id="steeringOutputCard" style="min-height:500px">
+          <div class="card-title flex-between">📄 <span>Generated Executive Report</span>
+            <div class="flex gap-8" id="steeringActions" style="display:none!important">
+              <button class="btn btn-ghost btn-sm" onclick="copySteeringReport()">📋 Copy</button>
+              <button class="btn btn-accent btn-sm" onclick="showToast('PDF export — open in browser print dialog','info')">📤 Export PDF</button>
+              <button class="btn btn-ghost btn-sm" onclick="emailSteeringReport()">✉️ Email</button>
+            </div>
+          </div>
+          <div id="steeringPrompt" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;gap:12px">
+            <span style="font-size:40px" aria-hidden="true">🧭</span>
+            <div style="font-size:14px;font-weight:600;color:var(--text-primary)">Ready to generate</div>
+            <div style="font-size:12px;color:var(--text-muted)">Fill in the inputs on the left, then click Generate Report. The AI will produce a full executive pack in seconds.</div>
+            <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+              <span class="chip chip-blue">Executive Summary</span>
+              <span class="chip chip-cyan">RAG Status</span>
+              <span class="chip chip-green">Top Risks</span>
+              <span class="chip chip-amber">Budget View</span>
+              <span class="chip chip-purple">Sponsor Talking Points</span>
+            </div>
+          </div>
+          <div id="steeringThinking" style="display:none;padding:40px 20px;text-align:center">
+            <div class="ai-thinking" style="justify-content:center">
+              <span>🤖 AI generating executive report</span>
+              <div class="dots"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+          <div id="steeringOutput" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       PAGE: STATUS GEN (Phase 3)
+       ======================== -->
+  <section class="page" id="page-statusgen">
+    <div class="page-header">
+      <div class="page-title">Executive Status Generator</div>
+      <div class="page-subtitle">One-click weekly, monthly, sponsor and board-level reports</div>
+    </div>
+    <div class="grid-2" style="margin-bottom:20px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="card">
+          <div class="card-title">⚙️ <span>Report Configuration</span></div>
+          <div class="form-group">
+            <label class="form-label" for="sg-type">Report Type</label>
+            <select class="form-select" id="sg-type">
+              <option value="weekly">Weekly Status Report</option>
+              <option value="monthly">Monthly Program Update</option>
+              <option value="sponsor">Sponsor Update</option>
+              <option value="executive">Executive Summary</option>
+              <option value="board">Board Report</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label" for="sg-program">Program Name</label><input class="form-input" id="sg-program" value="VGA Agentforce POC" placeholder="Program name"></div>
+          <div class="form-group"><label class="form-label" for="sg-period">Period</label><input class="form-input" id="sg-period" value="W/E 27 June 2025" placeholder="Reporting period"></div>
+          <div class="form-group">
+            <label class="form-label" for="sg-rag">Overall RAG</label>
+            <select class="form-select" id="sg-rag">
+              <option value="GREEN">GREEN — On Track</option>
+              <option value="AMBER">AMBER — At Risk</option>
+              <option value="RED">RED — Critical</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label" for="sg-achievements">Achievements This Period</label><textarea class="form-textarea" id="sg-achievements">M3 test-drive booking agent went live&#10;CSAT 5/5 received from VGA stakeholders&#10;Einstein Analytics rollout to 42 dealers complete</textarea></div>
+          <div class="form-group"><label class="form-label" for="sg-nextsteps">Next Steps</label><textarea class="form-textarea" id="sg-nextsteps">M4 warranty claims agent build commences Mon&#10;Legal sign-off required by Thu for Data Cloud&#10;eShop recovery plan review — steering committee</textarea></div>
+          <div class="form-group"><label class="form-label" for="sg-budgetline">Budget (spent / approved)</label><input class="form-input" id="sg-budgetline" value="$1.4M spent of $2.1M approved (67%) — on track"></div>
+          <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="generateStatusReport()">⚡ Generate Status Report</button>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="min-height:500px">
+          <div class="card-title flex-between">📄 <span>Generated Report</span>
+            <div class="flex gap-8">
+              <button class="btn btn-ghost btn-sm" onclick="copyStatusReport()">📋 Copy</button>
+              <button class="btn btn-accent btn-sm" onclick="showToast('Use browser print (Ctrl+P) to save as PDF','info')">📤 PDF</button>
+            </div>
+          </div>
+          <div id="sgPrompt" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;gap:12px">
+            <span style="font-size:40px" aria-hidden="true">📝</span>
+            <div style="font-size:14px;font-weight:600;color:var(--text-primary)">Configure &amp; Generate</div>
+            <div style="font-size:12px;color:var(--text-muted)">Select report type, fill your details, click Generate. AI produces a structured, ready-to-send report.</div>
+          </div>
+          <div id="sgThinking" style="display:none;padding:40px 20px;text-align:center">
+            <div class="ai-thinking" style="justify-content:center"><span>🤖 Writing your status report</span><div class="dots"><span></span><span></span><span></span></div></div>
+          </div>
+          <div id="sgOutput" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       PAGE: RAID (Phase 4)
+       ======================== -->
+  <section class="page" id="page-raid">
+    <div class="page-header flex-between">
+      <div>
+        <div class="page-title">RAID Intelligence</div>
+        <div class="page-subtitle">Paste your notes · AI extracts, clusters, prioritises, and predicts</div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="analyseRAID()">🤖 Analyse with AI</button>
+    </div>
+    <div class="grid-2" style="margin-bottom:20px">
+      <div class="card">
+        <div class="card-title">📥 <span>Raw RAID Input</span></div>
+        <div class="form-group"><label class="form-label" for="raid-input">Paste meeting notes, emails, or any project text</label>
+          <textarea class="form-textarea" id="raid-input" style="min-height:280px" placeholder="Paste any project text — meeting notes, emails, status updates. The AI will automatically identify and classify risks, assumptions, issues and dependencies...">Legal team mentioned sign-off could take longer than expected due to new VWFS privacy policy changes. Finance flagged budget creep on eShop integration work. We're assuming SAP will be upgraded by Q3. The Einstein rollout depends on the dealer portal being available. Need to resolve the data mapping issue from last sprint — blocking UAT. Vendor SLA for MuleSoft middleware has not been confirmed in writing. Assuming business users will be available for UAT in July.</textarea>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="analyseRAID()">🤖 Extract &amp; Analyse RAID</button>
+      </div>
+      <div class="card" id="raidOutputCard">
+        <div class="card-title">🧠 <span>AI RAID Analysis</span></div>
+        <div id="raidPrompt" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 20px;text-align:center;gap:10px">
+          <span style="font-size:40px" aria-hidden="true">🔍</span>
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary)">Paste text, click Analyse</div>
+          <div style="font-size:12px;color:var(--text-muted)">AI identifies Risks, Assumptions, Issues and Dependencies — then clusters, prioritises, recommends owners, and predicts future risks.</div>
+        </div>
+        <div id="raidThinking" style="display:none;padding:40px 20px;text-align:center"><div class="ai-thinking" style="justify-content:center"><span>🤖 Extracting RAID items</span><div class="dots"><span></span><span></span><span></span></div></div></div>
+        <div id="raidOutput" style="display:none"></div>
+      </div>
+    </div>
+    <!-- Pre-populated RAID Register -->
+    <div class="card">
+      <div class="card-title">📋 <span>RAID Register — Active Items</span></div>
+      <table class="data-table">
+        <thead><tr><th scope="col">ID</th><th scope="col">Type</th><th scope="col">Description</th><th scope="col">Priority</th><th scope="col">Owner</th><th scope="col">Action</th><th scope="col">Due</th></tr></thead>
+        <tbody>
+          <tr><td class="td-mono">R-01</td><td><span class="chip chip-red">Risk</span></td><td class="td-primary">Legal sign-off delay blocking Data Cloud go-live</td><td><span class="rag red">CRITICAL</span></td><td class="td-mono">Bharani</td><td style="font-size:11px;color:var(--text-secondary)">Escalate to CISO + 5-day extension</td><td class="td-mono">27 Jun</td></tr>
+          <tr><td class="td-mono">A-01</td><td><span class="chip chip-purple">Assumption</span></td><td class="td-primary">SAP upgrade will be completed by Q3 2025</td><td><span class="rag amber">HIGH</span></td><td class="td-mono">Arch Team</td><td style="font-size:11px;color:var(--text-secondary)">Confirm with SAP team — written confirmation</td><td class="td-mono">4 Jul</td></tr>
+          <tr><td class="td-mono">I-01</td><td><span class="chip chip-amber">Issue</span></td><td class="td-primary">Data mapping issue blocking UAT — sprint carry-over</td><td><span class="rag amber">HIGH</span></td><td class="td-mono">Tech Lead</td><td style="font-size:11px;color:var(--text-secondary)">Fix in current sprint — daily standup focus</td><td class="td-mono">30 Jun</td></tr>
+          <tr><td class="td-mono">D-01</td><td><span class="chip chip-cyan">Dependency</span></td><td class="td-primary">Einstein rollout depends on dealer portal availability</td><td><span class="rag green">MEDIUM</span></td><td class="td-mono">Bharani</td><td style="font-size:11px;color:var(--text-secondary)">Confirm dealer portal readiness with VGA IT</td><td class="td-mono">11 Jul</td></tr>
+          <tr><td class="td-mono">A-02</td><td><span class="chip chip-purple">Assumption</span></td><td class="td-primary">Business users available for UAT in July</td><td><span class="rag green">MEDIUM</span></td><td class="td-mono">BA Lead</td><td style="font-size:11px;color:var(--text-secondary)">Confirm availability — send UAT schedule</td><td class="td-mono">4 Jul</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========================
+       PAGE: STAKEHOLDER (Phase 4)
+       ======================== -->
+  <section class="page" id="page-stakeholder">
+    <div class="page-header flex-between">
+      <div>
+        <div class="page-title">Stakeholder Intelligence</div>
+        <div class="page-subtitle">Power/Interest matrix · Communication plan · Political risk · AI engagement recommendations</div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="analyseStakeholders()">🤖 Analyse Stakeholders</button>
+    </div>
+    <div class="grid-2" style="margin-bottom:20px">
+      <div class="card">
+        <div class="card-title">📥 <span>Meeting Minutes / Stakeholder Notes</span></div>
+        <div class="form-group">
+          <label class="form-label" for="stak-input" style="position:absolute;left:-9999px">Stakeholder notes</label>
+          <textarea class="form-textarea" id="stak-input" style="min-height:200px" placeholder="Paste meeting minutes, email threads, or stakeholder notes here...">Meeting with VGA steering committee. CEO Marcus was supportive but flagged concerns about dealer disruption. IT Director Helen is a technical champion — very engaged. Marketing Director James showed resistance, worried about budget. CISO David is focused on compliance — needs weekly updates. Dealer principal network (150 dealers) are end users — currently low engagement. VWFS CFO Sandra controls budget approval — high influence, currently neutral.</textarea>
+        </div>
+        <button class="btn btn-primary" style="width:100%;margin-bottom:12px" onclick="analyseStakeholders()">🤖 Map Stakeholders with AI</button>
+        <div id="stakThinking" style="display:none;text-align:center;padding:20px"><div class="ai-thinking" style="justify-content:center"><span>🤖 Mapping stakeholder landscape</span><div class="dots"><span></span><span></span><span></span></div></div></div>
+        <div id="stakAIOutput" style="display:none"></div>
+      </div>
+      <!-- Power/Interest Matrix SVG -->
+      <div class="card">
+        <div class="card-title">⚡ <span>Power / Interest Matrix</span></div>
+        <svg viewBox="0 0 320 280" xmlns="http://www.w3.org/2000/svg" style="width:100%" role="img" aria-label="Power versus interest stakeholder matrix">
+          <text x="160" y="20" fill="#475569" font-size="9" text-anchor="middle" font-family="Inter">POWER →</text>
+          <text x="14" y="150" fill="#475569" font-size="9" text-anchor="middle" font-family="Inter" transform="rotate(-90,14,150)">INTEREST →</text>
+          <!-- Quadrants -->
+          <rect x="30" y="28" width="130" height="110" rx="4" fill="rgba(16,185,129,0.05)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <rect x="164" y="28" width="130" height="110" rx="4" fill="rgba(37,99,235,0.08)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <rect x="30" y="142" width="130" height="110" rx="4" fill="rgba(245,158,11,0.05)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <rect x="164" y="142" width="130" height="110" rx="4" fill="rgba(239,68,68,0.08)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <!-- Quadrant labels -->
+          <text x="95" y="46" fill="#475569" font-size="8" text-anchor="middle">KEEP INFORMED</text>
+          <text x="229" y="46" fill="#3B82F6" font-size="8" text-anchor="middle" font-weight="700">MANAGE CLOSELY</text>
+          <text x="95" y="160" fill="#475569" font-size="8" text-anchor="middle">MONITOR</text>
+          <text x="229" y="160" fill="#F59E0B" font-size="8" text-anchor="middle" font-weight="700">KEEP SATISFIED</text>
+          <!-- Dividers -->
+          <line x1="30" y1="142" x2="294" y2="142" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="162" y1="28" x2="162" y2="252" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="4,3"/>
+          <!-- Stakeholder dots -->
+          <circle cx="240" cy="70" r="10" fill="#2563EB" opacity="0.85"/>
+          <text x="240" y="74" fill="white" font-size="7" text-anchor="middle">CEO</text>
+          <circle cx="260" cy="90" r="10" fill="#10B981" opacity="0.85"/>
+          <text x="260" y="94" fill="white" font-size="7" text-anchor="middle">IT</text>
+          <circle cx="220" cy="180" r="10" fill="#F59E0B" opacity="0.85"/>
+          <text x="220" y="184" fill="white" font-size="7" text-anchor="middle">CFO</text>
+          <circle cx="200" cy="75" r="10" fill="#8B5CF6" opacity="0.85"/>
+          <text x="200" y="79" fill="white" font-size="7" text-anchor="middle">CISO</text>
+          <circle cx="100" cy="80" r="10" fill="#EF4444" opacity="0.85"/>
+          <text x="100" y="84" fill="white" font-size="7" text-anchor="middle">Mktg</text>
+          <circle cx="85" cy="200" r="10" fill="#475569" opacity="0.85"/>
+          <text x="85" y="204" fill="white" font-size="7" text-anchor="middle">Dlrs</text>
+          <!-- Legend -->
+          <circle cx="40" cy="265" r="5" fill="#2563EB"/>
+          <text x="48" y="269" fill="#94A3B8" font-size="8">CEO</text>
+          <circle cx="80" cy="265" r="5" fill="#10B981"/>
+          <text x="88" y="269" fill="#94A3B8" font-size="8">IT Dir</text>
+          <circle cx="122" cy="265" r="5" fill="#F59E0B"/>
+          <text x="130" y="269" fill="#94A3B8" font-size="8">CFO</text>
+          <circle cx="160" cy="265" r="5" fill="#8B5CF6"/>
+          <text x="168" y="269" fill="#94A3B8" font-size="8">CISO</text>
+          <circle cx="200" cy="265" r="5" fill="#EF4444"/>
+          <text x="208" y="269" fill="#94A3B8" font-size="8">Mktg</text>
+          <circle cx="240" cy="265" r="5" fill="#475569"/>
+          <text x="248" y="269" fill="#94A3B8" font-size="8">Dealers</text>
+        </svg>
+      </div>
+    </div>
+    <!-- Communication Plan Table -->
+    <div class="card">
+      <div class="card-title">📡 <span>Recommended Communication Plan</span></div>
+      <table class="data-table">
+        <thead><tr><th scope="col">Stakeholder</th><th scope="col">Role</th><th scope="col">Power</th><th scope="col">Interest</th><th scope="col">Strategy</th><th scope="col">Frequency</th><th scope="col">Channel</th><th scope="col">Political Risk</th></tr></thead>
+        <tbody>
+          <tr><td class="td-primary">Marcus (CEO)</td><td>Executive Sponsor</td><td><span class="chip chip-red">HIGH</span></td><td><span class="chip chip-red">HIGH</span></td><td>Manage Closely</td><td>Weekly</td><td>1:1 + Steering</td><td style="font-size:11px;color:var(--success)">Low</td></tr>
+          <tr><td class="td-primary">Helen (IT Director)</td><td>Technical Champion</td><td><span class="chip chip-red">HIGH</span></td><td><span class="chip chip-red">HIGH</span></td><td>Manage Closely</td><td>Daily standup</td><td>Teams + Email</td><td style="font-size:11px;color:var(--success)">Low</td></tr>
+          <tr><td class="td-primary">Sandra (CFO)</td><td>Budget Approver</td><td><span class="chip chip-red">HIGH</span></td><td><span class="chip chip-amber">MED</span></td><td>Keep Satisfied</td><td>Monthly</td><td>Executive Report</td><td style="font-size:11px;color:var(--warning)">Medium</td></tr>
+          <tr><td class="td-primary">David (CISO)</td><td>Compliance Owner</td><td><span class="chip chip-amber">MED</span></td><td><span class="chip chip-red">HIGH</span></td><td>Keep Informed</td><td>Weekly</td><td>Compliance Report</td><td style="font-size:11px;color:var(--warning)">Medium</td></tr>
+          <tr><td class="td-primary">James (Marketing)</td><td>Resistant Stakeholder</td><td><span class="chip chip-green">LOW</span></td><td><span class="chip chip-amber">MED</span></td><td>Keep Informed</td><td>Fortnightly</td><td>Email Update</td><td style="font-size:11px;color:var(--danger)">HIGH — monitor</td></tr>
+          <tr><td class="td-primary">Dealer Network</td><td>End Users (150)</td><td><span class="chip chip-green">LOW</span></td><td><span class="chip chip-green">LOW</span></td><td>Monitor</td><td>Go-live only</td><td>Training Portal</td><td style="font-size:11px;color:var(--success)">Low</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========================
+       PAGE: VENDOR (Phase 4)
+       ======================== -->
+  <section class="page" id="page-vendor">
+    <div class="page-header flex-between">
+      <div>
+        <div class="page-title">Vendor Performance Dashboard</div>
+        <div class="page-subtitle">Scorecards · SLA tracking · Contract health · AI executive recommendations</div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="showToast('Vendor report exported','success')">📤 Export Scorecard</button>
+    </div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+      <div class="kpi-card" style="--kpi-color:var(--success)"><span class="kpi-icon" aria-hidden="true">🤝</span><div class="kpi-value">3</div><div class="kpi-label">Active Vendors</div></div>
+      <div class="kpi-card" style="--kpi-color:var(--success)"><span class="kpi-icon" aria-hidden="true">📊</span><div class="kpi-value">94%</div><div class="kpi-label">Avg Performance</div></div>
+      <div class="kpi-card" style="--kpi-color:var(--warning)"><span class="kpi-icon" aria-hidden="true">⚠️</span><div class="kpi-value">1</div><div class="kpi-label">SLA Breaches</div></div>
+      <div class="kpi-card" style="--kpi-color:var(--success)"><span class="kpi-icon" aria-hidden="true">📋</span><div class="kpi-value">$6M</div><div class="kpi-label">Contract Value</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:20px">
+      <!-- Vendor Card: MuleSoft -->
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:12px">
+          <div><div style="font-size:14px;font-weight:700;color:var(--text-primary)">MuleSoft / Salesforce</div><div style="font-size:11px;color:var(--text-muted)">Integration Platform</div></div>
+          <span class="rag green">GREEN</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+          <div style="text-align:center;background:var(--bg-base);border-radius:6px;padding:8px">
+            <div style="font-size:20px;font-weight:800;font-family:var(--font-mono);color:var(--success)">99.2%</div>
+            <div style="font-size:10px;color:var(--text-muted)">SLA Uptime</div>
+          </div>
+          <div style="text-align:center;background:var(--bg-base);border-radius:6px;padding:8px">
+            <div style="font-size:20px;font-weight:800;font-family:var(--font-mono);color:var(--success)">4.8/5</div>
+            <div style="font-size:10px;color:var(--text-muted)">Delivery Score</div>
+          </div>
+        </div>
+        <div style="margin-bottom:8px"><div class="flex-between" style="margin-bottom:3px"><span style="font-size:11px;color:var(--text-muted)">Milestone delivery</span><span style="font-size:11px;color:var(--success)">On time</span></div><div class="progress-bar" role="progressbar" aria-valuenow="96" aria-valuemin="0" aria-valuemax="100" aria-label="Milestone delivery 96 percent"><div class="progress-fill" style="width:96%;background:var(--success)"></div></div></div>
+        <div style="margin-bottom:10px"><div class="flex-between" style="margin-bottom:3px"><span style="font-size:11px;color:var(--text-muted)">Open defects</span><span style="font-size:11px;color:var(--success)">2 minor</span></div><div class="progress-bar" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" aria-label="Open defects 15 percent"><div class="progress-fill" style="width:15%;background:var(--success)"></div></div></div>
+        <div class="output-block"><h4>AI Recommendation</h4>Performance strong. Renew SLA for Phase 2 with uptime guarantee clause extended to 99.5%.</div>
+      </div>
+      <!-- Vendor Card: SAP SI -->
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:12px">
+          <div><div style="font-size:14px;font-weight:700;color:var(--text-primary)">SAP Systems Integrator</div><div style="font-size:11px;color:var(--text-muted)">ERP Integration</div></div>
+          <span class="rag amber">AMBER</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+          <div style="text-align:center;background:var(--bg-base);border-radius:6px;padding:8px">
+            <div style="font-size:20px;font-weight:800;font-family:var(--font-mono);color:var(--warning)">97.1%</div>
+            <div style="font-size:10px;color:var(--text-muted)">SLA Uptime</div>
+          </div>
+          <div style="text-align:center;background:var(--bg-base);border-radius:6px;padding:8px">
+            <div style="font-size:20px;font-weight:800;font-family:var(--font-mono);color:var(--warning)">3.4/5</div>
+            <div style="font-size:10px;color:var(--text-muted)">Delivery Score</div>
+          </div>
+        </div>
+        <div style="margin-bottom:8px"><div class="flex-between" style="margin-bottom:3px"><span style="font-size:11px;color:var(--text-muted)">Milestone delivery</span><span style="font-size:11px;color:var(--warning)">5 days late</span></div><div class="progress-bar" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" aria-label="Milestone delivery 72 percent"><div class="progress-fill" style="width:72%;background:var(--warning)"></div></div></div>
+        <div style="margin-bottom:10px"><div class="flex-between" style="margin-bottom:3px"><span style="font-size:11px;color:var(--text-muted)">Open defects</span><span style="font-size:11px;color:var(--warning)">7 (2 major)</span></div><div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" aria-label="Open defects 55 percent"><div class="progress-fill" style="width:55%;background:var(--warning)"></div></div></div>
+        <div class="output-block" style="border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.05)"><h4 style="color:var(--warning)">⚠️ AI Recommendation</h4>Integration spec delay is impacting eShop. Escalation call required this week. Add weekly delivery check-in clause to contract.</div>
+      </div>
+      <!-- Vendor Card: AWS -->
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:12px">
+          <div><div style="font-size:14px;font-weight:700;color:var(--text-primary)">AWS (S3 + Glue)</div><div style="font-size:11px;color:var(--text-muted)">Cloud Infrastructure</div></div>
+          <span class="rag green">GREEN</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+          <div style="text-align:center;background:var(--bg-base);border-radius:6px;padding:8px">
+            <div style="font-size:20px;font-weight:800;font-family:var(--font-mono);color:var(--success)">99.9%</div>
+            <div style="font-size:10px;color:var(--text-muted)">Uptime</div>
+          </div>
+          <div style="text-align:center;background:var(--bg-base);border-radius:6px;padding:8px">
+            <div style="font-size:20px;font-weight:800;font-family:var(--font-mono);color:var(--success)">5/5</div>
+            <div style="font-size:10px;color:var(--text-muted)">Delivery Score</div>
+          </div>
+        </div>
+        <div style="margin-bottom:8px"><div class="flex-between" style="margin-bottom:3px"><span style="font-size:11px;color:var(--text-muted)">Capacity headroom</span><span style="font-size:11px;color:var(--success)">Adequate</span></div><div class="progress-bar" role="progressbar" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100" aria-label="Capacity headroom 98 percent"><div class="progress-fill" style="width:98%;background:var(--success)"></div></div></div>
+        <div style="margin-bottom:10px"><div class="flex-between" style="margin-bottom:3px"><span style="font-size:11px;color:var(--text-muted)">Cost vs budget</span><span style="font-size:11px;color:var(--success)">-3% under</span></div><div class="progress-bar" role="progressbar" aria-valuenow="97" aria-valuemin="0" aria-valuemax="100" aria-label="Cost vs budget 97 percent"><div class="progress-fill" style="width:97%;background:var(--success)"></div></div></div>
+        <div class="output-block"><h4>AI Recommendation</h4>Excellent performance. No action required. Consider Reserved Instances for Q3 to lock in 18% cost saving.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       PAGE: BUDGET (Phase 4)
+       ======================== -->
+  <section class="page" id="page-budget">
+    <div class="page-header flex-between">
+      <div>
+        <div class="page-title">Budget Forecast AI</div>
+        <div class="page-subtitle">Burn analysis · Variance · Cashflow prediction · AI recovery recommendations</div>
+      </div>
+      <div class="flex gap-8">
+        <button class="btn btn-ghost btn-sm" onclick="showToast('Budget exported to CSV','success')">📤 Export</button>
+        <button class="btn btn-primary btn-sm" onclick="runBudgetForecast()">🤖 Run AI Forecast</button>
+      </div>
+    </div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(5,1fr);margin-bottom:20px">
+      <div class="kpi-card" style="--kpi-color:var(--primary)"><span class="kpi-icon" aria-hidden="true">💰</span><div class="kpi-value">$6.0M</div><div class="kpi-label">Total Approved</div></div>
+      <div class="kpi-card" style="--kpi-color:var(--accent)"><span class="kpi-icon" aria-hidden="true">💸</span><div class="kpi-value">$3.9M</div><div class="kpi-label">Spent to Date</div></div>
+      <div class="kpi-card" style="--kpi-color:var(--success)"><span class="kpi-icon" aria-hidden="true">🏦</span><div class="kpi-value">$2.1M</div><div class="kpi-label">Remaining</div></div>
+      <div class="kpi-card" style="--kpi-color:var(--warning)"><span class="kpi-icon" aria-hidden="true">📉</span><div class="kpi-value">-$42K</div><div class="kpi-label">Portfolio Variance</div><span class="kpi-trend down">eShop</span></div>
+      <div class="kpi-card" style="--kpi-color:var(--success)"><span class="kpi-icon" aria-hidden="true">🎯</span><div class="kpi-value">65%</div><div class="kpi-label">Budget Utilised</div><span class="kpi-trend flat">On track</span></div>
+    </div>
+    <div class="grid-7030" style="margin-bottom:20px">
+      <!-- Budget Burn Chart -->
+      <div class="card">
+        <div class="card-title">📈 <span>Portfolio Budget Burn — Actual vs Forecast</span></div>
+        <svg viewBox="0 0 580 200" xmlns="http://www.w3.org/2000/svg" style="width:100%" role="img" aria-label="Portfolio budget burn chart, actual versus forecast">
+          <defs>
+            <linearGradient id="burnGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2563EB" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#2563EB" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="forecastBurnGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.1"/>
+              <stop offset="100%" stop-color="#06B6D4" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <line x1="50" y1="20" x2="560" y2="20" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="50" y1="60" x2="560" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="50" y1="100" x2="560" y2="100" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="50" y1="140" x2="560" y2="140" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="50" y1="170" x2="560" y2="170" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <text x="44" y="24" fill="#475569" font-size="8" text-anchor="end">$6M</text>
+          <text x="44" y="64" fill="#475569" font-size="8" text-anchor="end">$4.5M</text>
+          <text x="44" y="104" fill="#475569" font-size="8" text-anchor="end">$3M</text>
+          <text x="44" y="144" fill="#475569" font-size="8" text-anchor="end">$1.5M</text>
+          <text x="44" y="174" fill="#475569" font-size="8" text-anchor="end">$0</text>
+          <path d="M70,170 L150,158 L230,140 L310,118 L390,95 L450,80" class="chart-line" stroke="#2563EB" stroke-width="2.5"/>
+          <path d="M70,170 L150,158 L230,140 L310,118 L390,95 L450,80 L450,170 L70,170 Z" fill="url(#burnGrad)"/>
+          <path d="M450,80 L510,55 L560,30" class="chart-line" stroke="#06B6D4" stroke-width="2" stroke-dasharray="5,3"/>
+          <path d="M450,80 L510,55 L560,30 L560,170 L450,170 Z" fill="url(#forecastBurnGrad)"/>
+          <line x1="70" y1="20" x2="560" y2="20" stroke="rgba(239,68,68,0.4)" stroke-width="1.5" stroke-dasharray="8,4"/>
+          <text x="556" y="16" fill="#EF4444" font-size="8" text-anchor="end">Budget Ceiling</text>
+          <line x1="450" y1="20" x2="450" y2="170" stroke="rgba(37,99,235,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="450" y="15" fill="#3B82F6" font-size="8" text-anchor="middle">Today</text>
+          <text x="70"  y="185" fill="#475569" font-size="8" text-anchor="middle">Jan</text>
+          <text x="150" y="185" fill="#475569" font-size="8" text-anchor="middle">Feb</text>
+          <text x="230" y="185" fill="#475569" font-size="8" text-anchor="middle">Mar</text>
+          <text x="310" y="185" fill="#475569" font-size="8" text-anchor="middle">Apr</text>
+          <text x="390" y="185" fill="#475569" font-size="8" text-anchor="middle">May</text>
+          <text x="450" y="185" fill="#475569" font-size="8" text-anchor="middle">Jun</text>
+          <text x="510" y="185" fill="#475569" font-size="8" text-anchor="middle">Jul</text>
+          <text x="560" y="185" fill="#475569" font-size="8" text-anchor="middle">Aug</text>
+          <line x1="70" y1="198" x2="90" y2="198" stroke="#2563EB" stroke-width="2.5"/>
+          <text x="94" y="201" fill="#94A3B8" font-size="8">Actual</text>
+          <line x1="140" y1="198" x2="160" y2="198" stroke="#06B6D4" stroke-width="2" stroke-dasharray="5,3"/>
+          <text x="164" y="201" fill="#94A3B8" font-size="8">AI Forecast</text>
+        </svg>
+      </div>
+      <!-- Budget by program -->
+      <div class="card">
+        <div class="card-title">📊 <span>Budget by Program</span></div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div>
+            <div class="flex-between" style="margin-bottom:4px"><span style="font-size:12px;color:var(--text-primary);font-weight:600">VGA Agentforce</span><span class="td-mono" style="font-size:11px;color:var(--success)">$1.4M / $2.1M</span></div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" aria-label="VGA Agentforce budget 67 percent"><div class="progress-fill" style="width:67%;background:var(--success)"></div></div>
+          </div>
+          <div>
+            <div class="flex-between" style="margin-bottom:4px"><span style="font-size:12px;color:var(--text-primary);font-weight:600">Data Cloud Migration</span><span class="td-mono" style="font-size:11px;color:var(--warning)">$1.1M / $1.8M</span></div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="61" aria-valuemin="0" aria-valuemax="100" aria-label="Data Cloud Migration budget 61 percent"><div class="progress-fill" style="width:61%;background:var(--warning)"></div></div>
+          </div>
+          <div>
+            <div class="flex-between" style="margin-bottom:4px"><span style="font-size:12px;color:var(--text-primary);font-weight:600">Einstein Analytics</span><span class="td-mono" style="font-size:11px;color:var(--success)">$1.3M / $1.4M</span></div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100" aria-label="Einstein Analytics budget 93 percent"><div class="progress-fill" style="width:93%;background:var(--success)"></div></div>
+          </div>
+          <div>
+            <div class="flex-between" style="margin-bottom:4px"><span style="font-size:12px;color:var(--text-primary);font-weight:600">eShop Aftersales</span><span class="td-mono" style="font-size:11px;color:var(--danger)">$0.3M / $0.7M</span></div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100" aria-label="eShop Aftersales budget 43 percent"><div class="progress-fill" style="width:43%;background:var(--danger)"></div></div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div id="budgetForecastOutput">
+          <div class="output-block">
+            <h4>🤖 AI Budget Forecast</h4>
+            Portfolio tracking $42K adverse on eShop. At current burn rate, full portfolio will utilise $5.96M of $6M (99.3%) by projected close. Recommend $50K contingency release from eShop Phase 2 scope to absorb variance. Overall portfolio is financially healthy.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       PAGE: DELIVERY (Phase 4)
+       ======================== -->
+  <section class="page" id="page-delivery">
+    <div class="page-header flex-between">
+      <div>
+        <div class="page-title">Delivery Predictor</div>
+        <div class="page-subtitle">Velocity · Burnup · Critical path · AI completion forecast · Recovery plans</div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="runDeliveryForecast()">🤖 Forecast Completion</button>
+    </div>
+    <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+      <div class="kpi-card" style="--kpi-color:var(--primary)"><span class="kpi-icon" aria-hidden="true">⚡</span><div class="kpi-value">24</div><div class="kpi-label">Team Velocity (pts/sprint)</div><span class="kpi-trend up">+3</span></div>
+      <div class="kpi-card" style="--kpi-color:var(--success)"><span class="kpi-icon" aria-hidden="true">✅</span><div class="kpi-value">312</div><div class="kpi-label">Story Points Done</div><span class="kpi-trend up">78%</span></div>
+      <div class="kpi-card" style="--kpi-color:var(--accent)"><span class="kpi-icon" aria-hidden="true">📅</span><div class="kpi-value">Aug 25</div><div class="kpi-label">AI Forecast Date</div><span class="kpi-trend flat">±2wk</span></div>
+      <div class="kpi-card" style="--kpi-color:var(--success)"><span class="kpi-icon" aria-hidden="true">🎯</span><div class="kpi-value">83%</div><div class="kpi-label">AI Confidence</div><span class="kpi-trend up">+5%</span></div>
+    </div>
+    <div class="grid-7030" style="margin-bottom:20px">
+      <!-- Burnup Chart -->
+      <div class="card">
+        <div class="card-title">📈 <span>Story Point Burnup — VGA Agentforce POC</span></div>
+        <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" style="width:100%" role="img" aria-label="Story point burnup chart across sprints one through eight">
+          <defs>
+            <linearGradient id="burnupGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#10B981" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <line x1="50" y1="20" x2="540" y2="20" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="50" y1="60" x2="540" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="50" y1="100" x2="540" y2="100" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="50" y1="140" x2="540" y2="140" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="50" y1="165" x2="540" y2="165" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="70" y1="20" x2="540" y2="20" stroke="rgba(37,99,235,0.3)" stroke-width="1.5" stroke-dasharray="8,4"/>
+          <text x="536" y="16" fill="#3B82F6" font-size="8" text-anchor="end">400 pts scope</text>
+          <path d="M70,165 L150,152 L230,138 L310,118 L390,95 L450,72" class="chart-line" stroke="#10B981" stroke-width="2.5"/>
+          <path d="M70,165 L150,152 L230,138 L310,118 L390,95 L450,72 L450,165 L70,165 Z" fill="url(#burnupGrad)"/>
+          <path d="M450,72 L490,52 L530,30" class="chart-line" stroke="#10B981" stroke-width="2" stroke-dasharray="5,3"/>
+          <path d="M450,72 L490,44 L530,20" class="chart-line" stroke="rgba(16,185,129,0.2)" stroke-width="10" stroke-linecap="round"/>
+          <line x1="450" y1="20" x2="450" y2="165" stroke="rgba(37,99,235,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="450" y="15" fill="#3B82F6" font-size="8" text-anchor="middle">Today</text>
+          <text x="70"  y="180" fill="#475569" font-size="8" text-anchor="middle">S1</text>
+          <text x="150" y="180" fill="#475569" font-size="8" text-anchor="middle">S2</text>
+          <text x="230" y="180" fill="#475569" font-size="8" text-anchor="middle">S3</text>
+          <text x="310" y="180" fill="#475569" font-size="8" text-anchor="middle">S4</text>
+          <text x="390" y="180" fill="#475569" font-size="8" text-anchor="middle">S5</text>
+          <text x="450" y="180" fill="#475569" font-size="8" text-anchor="middle">S6</text>
+          <text x="490" y="180" fill="#475569" font-size="8" text-anchor="middle">S7</text>
+          <text x="530" y="180" fill="#475569" font-size="8" text-anchor="middle">S8</text>
+          <text x="44" y="24" fill="#475569" font-size="8" text-anchor="end">400</text>
+          <text x="44" y="64" fill="#475569" font-size="8" text-anchor="end">300</text>
+          <text x="44" y="104" fill="#475569" font-size="8" text-anchor="end">200</text>
+          <text x="44" y="144" fill="#475569" font-size="8" text-anchor="end">100</text>
+          <text x="44" y="169" fill="#475569" font-size="8" text-anchor="end">0</text>
+        </svg>
+      </div>
+      <!-- AI Recovery -->
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="card" style="background:rgba(16,185,129,0.05);border-color:rgba(16,185,129,0.2)">
+          <div class="card-title" style="color:var(--success)">✅ On Track</div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.6">Current velocity of 24pts/sprint projects completion by <strong style="color:var(--text-primary)">28 Aug 2025</strong> with 83% confidence. 2 sprints of buffer remain.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">🚨 <span>Critical Path Items</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:12px;color:var(--text-secondary);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--danger)" aria-hidden="true">●</span><div>Data schema finalisation (blocks agent training) — 3 days</div></div>
+            <div style="font-size:12px;color:var(--text-secondary);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--warning)" aria-hidden="true">●</span><div>Legal sign-off on data migration — 5 days</div></div>
+            <div style="font-size:12px;color:var(--text-secondary);display:flex;gap:8px;align-items:flex-start"><span style="color:var(--success)" aria-hidden="true">●</span><div>UAT environment provisioning — complete</div></div>
+          </div>
+        </div>
+        <div id="deliveryForecastAI">
+          <div class="output-block">
+            <h4>🤖 AI Recovery Plan</h4>
+            If legal sign-off is delayed beyond 5 days, recommend parallel tracking: begin agent model training on anonymised data to avoid sprint idle time. This maintains August completion date even in a 10-day worst-case scenario.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Sprint velocity table -->
+    <div class="card">
+      <div class="card-title">⚡ <span>Sprint Velocity History</span></div>
+      <table class="data-table">
+        <thead><tr><th scope="col">Sprint</th><th scope="col">Committed</th><th scope="col">Completed</th><th scope="col">Velocity</th><th scope="col">Carry-over</th><th scope="col">Team Health</th></tr></thead>
+        <tbody>
+          <tr><td class="td-mono">S1</td><td class="td-mono">20</td><td class="td-mono">18</td><td><span class="rag amber">18 pts</span></td><td class="td-mono">2</td><td style="font-size:11px;color:var(--warning)">Settling in</td></tr>
+          <tr><td class="td-mono">S2</td><td class="td-mono">22</td><td class="td-mono">22</td><td><span class="rag green">22 pts</span></td><td class="td-mono">0</td><td style="font-size:11px;color:var(--success)">Good rhythm</td></tr>
+          <tr><td class="td-mono">S3</td><td class="td-mono">25</td><td class="td-mono">24</td><td><span class="rag green">24 pts</span></td><td class="td-mono">1</td><td style="font-size:11px;color:var(--success)">High performance</td></tr>
+          <tr><td class="td-mono">S4</td><td class="td-mono">26</td><td class="td-mono">26</td><td><span class="rag green">26 pts</span></td><td class="td-mono">0</td><td style="font-size:11px;color:var(--success)">Peak velocity</td></tr>
+          <tr><td class="td-mono">S5</td><td class="td-mono">26</td><td class="td-mono">24</td><td><span class="rag amber">24 pts</span></td><td class="td-mono">2</td><td style="font-size:11px;color:var(--warning)">UAT complexity</td></tr>
+          <tr><td class="td-mono">S6 (current)</td><td class="td-mono">24</td><td class="td-mono">–</td><td><span class="chip chip-blue">In flight</span></td><td class="td-mono">–</td><td style="font-size:11px;color:var(--accent)">On track</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========================
+       PAGE: ASK DELIVERY INTELLIGENCE (Phase 4)
+       ======================== -->
+  <section class="page" id="page-askpd">
+    <div class="page-header">
+      <div class="page-title">Ask Delivery Intelligence</div>
+      <div class="page-subtitle">Enterprise AI assistant · Powered by Claude · 12 expert prompt templates</div>
+    </div>
+    <div class="grid-6040">
+      <!-- Chat Interface -->
+      <div class="card" style="display:flex;flex-direction:column;min-height:560px">
+        <div class="card-title">💬 <span>Delivery Intelligence Chat</span> <span class="chip chip-cyan" style="margin-left:auto">Claude Powered</span></div>
+        <div id="askpdMessages" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;margin-bottom:16px;min-height:360px;max-height:420px;padding-right:4px" aria-live="polite">
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0" aria-hidden="true">⚡</div>
+            <div style="background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.15);border-radius:0 10px 10px 10px;padding:10px 14px;max-width:85%">
+              <div style="font-size:12px;color:var(--text-primary);line-height:1.6">Hello! I'm Delivery Intelligence, your AI-enabled senior delivery assistant. I have full context of your portfolio: <strong>4 active programs, $6M under management, CSAT 5/5</strong>. Ask me anything about project recovery, executive communication, risk escalation, stakeholder management, vendor issues, or Agentforce strategy.<br><br>Or select a prompt template on the right to get started instantly.</div>
+              <div style="font-size:10px;color:var(--text-muted);margin-top:6px;font-family:var(--font-mono)">Delivery Intelligence · Just now</div>
+            </div>
+          </div>
+        </div>
+        <div id="askpdThinking" style="display:none;padding:8px 0">
+          <div class="ai-thinking"><span>🤖 AI thinking</span><div class="dots"><span></span><span></span><span></span></div></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-end">
+          <label class="form-label" for="askpdInput" style="position:absolute;left:-9999px">Ask Delivery Intelligence</label>
+          <textarea id="askpdInput" class="form-textarea" style="flex:1;min-height:60px;max-height:120px;resize:none" placeholder="Ask anything about your programs, risks, stakeholders, budgets, or Agentforce strategy..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAskPD();}"></textarea>
+          <button class="btn btn-primary" style="padding:10px 16px;align-self:flex-end" onclick="sendAskPD()">⚡ Send</button>
+        </div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:6px">Press Enter to send · Shift+Enter for new line</div>
+      </div>
+      <!-- Prompt Templates -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="card">
+          <div class="card-title">📋 <span>Expert Prompt Templates</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px" id="promptTemplates">
+            <button class="prompt-template-btn" onclick="useTemplate('Write a project recovery plan for the eShop Aftersales program which is RED status, -$42K budget variance and scope creep on SAP integration. Include immediate actions, owner assignments, and a revised delivery timeline.')">🚨 Project Recovery Plan</button>
+            <button class="prompt-template-btn" onclick="useTemplate('Draft an executive communication to the VGA steering committee explaining the AMBER status on Data Cloud Migration due to legal sign-off delays. Keep it concise, solution-focused, and include a recommended decision for the committee.')">✉️ Executive Communication</button>
+            <button class="prompt-template-btn" onclick="useTemplate('Create a risk escalation email to the VWFS CISO regarding R-01 (legal sign-off delay on data migration). The risk is rated P5/I4 (Critical). Request a 5-day extension approval with clear rationale and impact if not approved.')">⚠️ Risk Escalation Email</button>
+            <button class="prompt-template-btn" onclick="useTemplate('Recommend a stakeholder engagement strategy for James (Marketing Director) who is resistant to the VGA Agentforce program due to budget concerns. He has medium power and medium interest. What are the best approaches to shift him from resistant to neutral or supportive?')">🕸️ Stakeholder Strategy</button>
+            <button class="prompt-template-btn" onclick="useTemplate('Draft a vendor escalation email to the SAP Systems Integrator regarding their 5-day milestone delay on the eShop integration spec. Request a revised delivery date, root cause analysis, and remediation plan within 48 hours.')">🤝 Vendor Escalation</button>
+            <button class="prompt-template-btn" onclick="useTemplate('The eShop budget has a -$42K variance with 66% of project remaining. Analyse the options: (1) raise a change request, (2) reduce scope, (3) absorb within contingency. Recommend the best path with pros and cons of each.')">💰 Budget Issue Analysis</button>
+            <button class="prompt-template-btn" onclick="useTemplate('Draft a change request for $50K additional budget on the eShop Aftersales project due to underestimated SAP integration complexity. Include business justification, impact of not approving, and risk mitigation.')">📝 Change Request Draft</button>
+            <button class="prompt-template-btn" onclick="useTemplate('We need to add 2 more developers to the VGA Agentforce POC for sprints 7 and 8. Draft a resource planning request to the delivery manager explaining the need, expected outcomes, and ROI.')">👥 Resource Planning Request</button>
+            <button class="prompt-template-btn" onclick="useTemplate('Explain how Agentforce AI agents could be used to automate warranty claims processing for a dealer network of 150 dealers. Include technical approach, business value, implementation timeline, and risks. Bharani has already delivered a POC at Volkswagen Group Australia.')">🤖 Agentforce Strategy</button>
+            <button class="prompt-template-btn" onclick="useTemplate('Write 5 targeted interview talking points for Bharani Bussari applying for a Salesforce Delivery Manager role at Capgemini. Focus on the VGA portfolio ($6M, CSAT 5/5), Agentforce Specialist credential, AI-powered delivery, and the eShop recovery as a demonstration of resilience.')">🎯 Interview Talking Points</button>
+            <button class="prompt-template-btn" onclick="useTemplate('The eShop project needs a go-live readiness checklist. Generate a comprehensive checklist covering UAT sign-off, training, hypercare plan, rollback procedure, communication plan, vendor readiness, and executive approval gates.')">✅ Go-Live Checklist</button>
+            <button class="prompt-template-btn" onclick="useTemplate('Summarise the Digital Transformation lessons learned from the VGA Agentforce POC delivery for a senior executive audience. Highlight what worked (AI acceleration, stakeholder management, CSAT 5/5) and what to improve (legal governance, scope control on integrations).')">📚 Lessons Learned</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       PAGE: ABOUT
+       ======================== -->
+  <section class="page" id="page-about">
+    <div class="page-header">
+      <div class="page-title">About Bharani Bussari</div>
+      <div class="page-subtitle">Senior Project Manager | AI-Enabled Delivery · 18+ Years Digital Transformation</div>
+    </div>
+
+    <div class="grid-6040">
+      <div class="card">
+        <div class="card-title">👤 <span>Professional Profile</span></div>
+        <p style="font-size:14px;line-height:1.8;color:var(--text-secondary)">
+          Senior Salesforce Program Manager and AI practitioner with 18+ years delivering large-scale CRM and digital transformation programs across automotive, financial services, healthcare, and NGO sectors.
+          <br><br>
+          Most recently led a $6M Salesforce program portfolio for Volkswagen Group Australia — generating CSAT 5/5 across every engagement, with the Einstein Analytics solution recognised as VW's <strong style="color:var(--text-primary)">Global Best Productivity Initiative</strong> worldwide.
+          <br><br>
+          One of Australia's few <strong style="color:var(--accent)">Agentforce Specialist</strong>-certified Project Managers, with hands-on delivery of AI agent POCs for test-drive bookings and warranty claims automation.
+        </p>
+        <div class="divider"></div>
+        <div class="flex gap-8" style="flex-wrap:wrap">
+          <span class="chip chip-blue">Agentforce Specialist</span>
+          <span class="chip chip-cyan">Data Cloud</span>
+          <span class="chip chip-purple">PMP</span>
+          <span class="chip chip-green">CSAT 5/5</span>
+          <span class="chip chip-amber">Six Sigma GB</span>
+          <span class="chip chip-red">7× Salesforce</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏆 <span>Key Metrics</span></div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <div class="flex-between mb-16" style="margin-bottom:4px">
+              <span style="font-size:12px;color:var(--text-secondary)">Revenue Managed</span>
+              <span class="text-mono text-sm font-bold">$6M+</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="Revenue managed indicator"><div class="progress-fill" style="width:85%;background:var(--primary)"></div></div>
+          </div>
+          <div>
+            <div class="flex-between" style="margin-bottom:4px">
+              <span style="font-size:12px;color:var(--text-secondary)">Client CSAT</span>
+              <span class="text-mono text-sm font-bold text-success">5 / 5</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" aria-label="Client CSAT 5 out of 5"><div class="progress-fill" style="width:100%;background:var(--success)"></div></div>
+          </div>
+          <div>
+            <div class="flex-between" style="margin-bottom:4px">
+              <span style="font-size:12px;color:var(--text-secondary)">Salesforce Certifications</span>
+              <span class="text-mono text-sm font-bold text-accent">7×</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" aria-label="Salesforce certifications indicator"><div class="progress-fill" style="width:70%;background:var(--accent)"></div></div>
+          </div>
+          <div>
+            <div class="flex-between" style="margin-bottom:4px">
+              <span style="font-size:12px;color:var(--text-secondary)">Years Experience</span>
+              <span class="text-mono text-sm font-bold">18+</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" aria-label="Years of experience indicator"><div class="progress-fill" style="width:90%;background:var(--purple)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="card mt-16">
+      <div class="card-title">📅 <span>Career Timeline</span></div>
+      <div style="display:flex;flex-direction:column;gap:0">
+        <div style="display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border)">
+          <div style="width:90px;font-size:11px;font-family:var(--font-mono);color:var(--text-muted);flex-shrink:0;padding-top:2px">2023–2026</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:600;color:var(--text-primary)">Senior PM — Katzion Technology Solutions (GlobalLogic)</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:3px">$6M revenue · VGA, VWFS, Audi, Skoda · Agentforce POC · CSAT 5/5 · Client Impact Award</div>
+          </div>
+          <span class="rag green">GREEN</span>
+        </div>
+        <div style="display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border)">
+          <div style="width:90px;font-size:11px;font-family:var(--font-mono);color:var(--text-muted);flex-shrink:0;padding-top:2px">2022</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:600;color:var(--text-primary)">BA & PM — ClearR</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:3px">5 concurrent clients · Healthcare, NGO, Aged Care · Salesforce multi-cloud</div>
+          </div>
+          <span class="rag green">GREEN</span>
+        </div>
+        <div style="display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border)">
+          <div style="width:90px;font-size:11px;font-family:var(--font-mono);color:var(--text-muted);flex-shrink:0;padding-top:2px">2007–2014</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:600;color:var(--text-primary)">PM / CRM CoE — GE India Exports</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:3px">$1.4B ERP program · $34M savings · $345M cost avoidance · 250+ global resources</div>
+          </div>
+          <span class="rag green">GREEN</span>
+        </div>
+        <div style="display:flex;gap:16px;padding:14px 0">
+          <div style="width:90px;font-size:11px;font-family:var(--font-mono);color:var(--text-muted);flex-shrink:0;padding-top:2px">2000–2007</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:600;color:var(--text-primary)">Software Consultant / Tech Lead — TCS & GE</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:3px">GE Aircraft, P&G, Merrill Lynch · Siebel CRM · CMM Level 5</div>
+          </div>
+          <span class="rag green">GREEN</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+       PAGE: CONTACT
+       ======================== -->
+  <section class="page" id="page-contact">
+    <div class="page-header">
+      <div class="page-title">Contact</div>
+      <div class="page-subtitle">Open to Senior Salesforce PM and Delivery Manager opportunities · Sydney & remote</div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📬 <span>Get In Touch</span></div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:18px" aria-hidden="true">📧</span>
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:700;letter-spacing:0.05em">Email</div>
+              <div style="font-size:13px;color:var(--accent)">bharani.bussari@gmail.com</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:18px" aria-hidden="true">🔗</span>
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:700;letter-spacing:0.05em">LinkedIn</div>
+              <div style="font-size:13px;color:var(--accent)">linkedin.com/in/bharani-bussari-75201523</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:18px" aria-hidden="true">📍</span>
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:700;letter-spacing:0.05em">Location</div>
+              <div style="font-size:13px;color:var(--text-secondary)">Sydney, NSW · Australian Citizen</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:18px" aria-hidden="true">📞</span>
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:700;letter-spacing:0.05em">Phone</div>
+              <div style="font-size:13px;color:var(--text-secondary)">0405 298 062</div>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-8">
+          <button class="btn btn-primary" onclick="showToast('Opening email client...', 'success')">✉️ Send Email</button>
+          <button class="btn btn-accent" onclick="showToast('Opening LinkedIn...', 'info')">🔗 LinkedIn</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🎯 <span>Seeking Roles</span></div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="padding:10px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm)">
+            <div style="font-size:12px;font-weight:600;color:var(--text-primary)">Salesforce Delivery Manager</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px">SI Partners — Capgemini, Wipro, Infosys, Hexaware</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm)">
+            <div style="font-size:12px;font-weight:600;color:var(--text-primary)">Salesforce Program Manager</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Enterprise — Banks, Insurers, Government</div>
+          </div>
+          <div style="padding:10px 12px;background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.2);border-radius:var(--radius-sm)">
+            <div style="font-size:12px;font-weight:600;color:var(--accent)">Agentforce Practice Lead</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px">AI Delivery · Rare AU credential</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm)">
+            <div style="font-size:12px;font-weight:600;color:var(--text-primary)">Client Partner / Engagement Manager</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Longer term · Big 4 / Consulting</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size:12px;color:var(--text-muted)">
+          Target: <span style="color:var(--text-secondary)">$160–200K perm · $950–$1,100/day contract</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Toast container -->
+<div id="toast-container" aria-live="polite"></div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+const pageMap = {
+  dashboard:   { id: 'page-dashboard',   label: 'Dashboard' },
+  portfolio:   { id: 'page-portfolio',   label: 'Portfolio Dashboard' },
+  risk:        { id: 'page-risk',        label: 'AI Risk Radar' },
+  steering:    { id: 'page-steering',    label: 'Steering Committee Copilot' },
+  statusgen:   { id: 'page-statusgen',   label: 'Executive Status Generator' },
+  raid:        { id: 'page-raid',        label: 'RAID Intelligence' },
+  stakeholder: { id: 'page-stakeholder', label: 'Stakeholder Intelligence' },
+  vendor:      { id: 'page-vendor',      label: 'Vendor Dashboard' },
+  budget:      { id: 'page-budget',      label: 'Budget Forecast AI' },
+  delivery:    { id: 'page-delivery',    label: 'Delivery Predictor' },
+  askpd:       { id: 'page-askpd',       label: 'Ask Delivery Intelligence' },
+  about:       { id: 'page-about',       label: 'About Bharani' },
+  contact:     { id: 'page-contact',     label: 'Contact' },
+};
+
+function navigate(key, navEl) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // Remove active from all nav items
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  // Show target page
+  const page = pageMap[key];
+  if (!page) return;
+  const el = document.getElementById(page.id);
+  if (el) el.classList.add('active');
+
+  // Mark nav item active
+  if (navEl) navEl.classList.add('active');
+
+  // Update breadcrumb
+  document.getElementById('breadcrumbCurrent').textContent = page.label;
+
+  // Lazily render the enhanced portfolio dashboard the first time it's opened
+  if (key === 'portfolio') {
+    renderPortfolioDashboard();
+  }
+
+  // Close mobile sidebar
+  closeSidebar();
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============================================================
+   MOBILE SIDEBAR
+   ============================================================ */
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+/* ============================================================
+   TOAST NOTIFICATIONS
+   ============================================================ */
+function showToast(message, type = 'info') {
+  const icons = { success: '✅', error: '🔴', info: '💡' };
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span aria-hidden="true">${icons[type] || '💡'}</span><span>${message}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(20px)';
+    toast.style.transition = 'all 0.3s ease';
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+
+/* ============================================================
+   GLOBAL SEARCH (basic filter)
+   ============================================================ */
+document.getElementById('globalSearch').addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  if (!q) return;
+  const keys = Object.keys(pageMap).filter(k => pageMap[k].label.toLowerCase().includes(q));
+  if (keys.length > 0) {
+    showToast(`Navigate to: ${pageMap[keys[0]].label}`, 'info');
+  }
+});
+
+/* ============================================================
+   ANIMATE KPI values on load
+   ============================================================ */
+function animateCounters() {
+  document.querySelectorAll('.kpi-value').forEach(el => {
+    const text = el.textContent;
+    const num = parseFloat(text.replace(/[^0-9.]/g, ''));
+    if (!num || isNaN(num)) return;
+    const suffix = text.replace(/[0-9.]/g, '');
+    let start = 0;
+    const duration = 1200;
+    const step = 16;
+    const increment = num / (duration / step);
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= num) { start = num; clearInterval(timer); }
+      el.textContent = (Number.isInteger(num) ? Math.round(start) : start.toFixed(1)) + suffix;
+    }, step);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  animateCounters();
+  renderPortfolioDashboard();
+  showToast('Welcome to Executive Delivery Intelligence', 'success');
+});
+
+
+/* ============================================================
+   ANTHROPIC API HELPER
+   ============================================================ */
+async function callClaude(systemPrompt, userPrompt) {
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 1000,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userPrompt }]
+    })
+  });
+  if (!response.ok) throw new Error('API error ' + response.status);
+  const data = await response.json();
+  return data.content.map(b => b.text || '').join('');
+}
+
+function formatAIText(text) {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^### (.+)$/gm, '<h4>$1</h4>')
+    .replace(/^## (.+)$/gm, '<h3 style="font-size:14px;font-weight:700;color:var(--text-primary);margin:14px 0 6px">$1</h3>')
+    .replace(/^# (.+)$/gm, '<h3 style="font-size:15px;font-weight:800;color:var(--text-primary);margin:14px 0 8px">$1</h3>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+    .replace(/^(GREEN|AMBER|RED)$/gm, (m) => {
+      const cls = m.toLowerCase();
+      return `<span class="rag ${cls}">${m}</span>`;
+    })
+    .replace(/\n/g, '<br>');
+}
+
+/* ============================================================
+   PORTFOLIO DASHBOARD — ENHANCED
+   ============================================================ */
+const portfolioProjects = [
+  {
+    id: 1, name: 'Atlas CRM Transformation', client: 'Meridian Retail Group', pm: 'Sarah Chen',
+    rag: 'green', phase: 'Build · Sprint 4/5', golive: '15 Aug 2026', start: '2026-02-03', end: '2026-08-15',
+    sprints: ['done','done','done','active','pending'], team: 8,
+    spent: 52700, budget: 85000,
+    highlight: 'Sprint 4 development complete; UAT preparation underway. No blockers. Data migration scripts 80% done.',
+    risks: 0, riskLabel: '', decisions: 0, decisionLabel: ''
+  },
+  {
+    id: 2, name: 'Helios ERP Rollout', client: 'Solaris Manufacturing', pm: 'James Okafor',
+    rag: 'amber', phase: 'UAT · Wave 2', golive: '1 Oct 2026', start: '2025-11-01', end: '2026-10-01',
+    sprints: null, team: 14,
+    spent: 312000, budget: 400000,
+    highlight: '3 Priority-1 defects in payroll module threaten UAT sign-off. Vendor patch expected 5 Jul — sign-off date at risk by 2 weeks.',
+    risks: 1, riskLabel: 'HIGH — payroll defects', decisions: 1, decisionLabel: 'Sign-off date waiver'
+  },
+  {
+    id: 3, name: 'Vertex CX Platform Modernisation', client: 'Cascade Financial', pm: 'Lena Kovac',
+    rag: 'green', phase: 'Design · Finalise', golive: '15 Feb 2027', start: '2026-03-15', end: '2027-02-15',
+    sprints: ['done','done','active','pending','pending','pending'], team: 11,
+    spent: 187500, budget: 510000,
+    highlight: 'UX design approved by client; API contract finalised. Moving to build phase 2 weeks ahead of plan.',
+    risks: 1, riskLabel: 'MED — key architect on leave Jul', decisions: 0, decisionLabel: ''
+  },
+  {
+    id: 4, name: 'Orion Data Warehouse', client: 'Northfield Group', pm: 'Marcus Bello',
+    rag: 'red', phase: 'Build · Delayed', golive: '30 Sep 2026', start: '2025-12-01', end: '2026-09-30',
+    sprints: null, team: 9,
+    spent: 298000, budget: 350000,
+    highlight: 'Source system data quality failures blocking ETL completion. Client IT team unresponsive. Budget exhaustion risk by 31 Jul without scope reduction or additional funding.',
+    risks: 2, riskLabel: 'HIGH — budget + data quality', decisions: 1, decisionLabel: 'Scope / budget trade-off'
+  },
+  {
+    id: 5, name: 'Summit HR Digital Transformation', client: 'Pinerock Retail', pm: 'Yuki Tanaka',
+    rag: 'green', phase: 'Hypercare · Week 3', golive: 'Live since 2 Jun 2026', start: '2025-10-01', end: '2026-07-15',
+    sprints: null, team: 6,
+    spent: 418000, budget: 425000,
+    highlight: 'Go-live successful — 1,200 employees onboarded. 4 minor support tickets open; all P3. System performance 99.8% uptime.',
+    risks: 0, riskLabel: '', decisions: 0, decisionLabel: ''
+  },
+  {
+    id: 6, name: 'Compass Supply Chain Optimisation', client: 'Bluewater Logistics', pm: 'Priya Nair',
+    rag: 'green', phase: 'Discovery · Week 4', golive: '1 Apr 2027', start: '2026-05-01', end: '2027-04-01',
+    sprints: ['done','active','pending','pending'], team: 5,
+    spent: 43500, budget: 150000,
+    highlight: 'Stakeholder workshops complete; current-state process maps signed off. Requirements backlog drafted — 87 items prioritised with client.',
+    risks: 0, riskLabel: '', decisions: 0, decisionLabel: ''
+  },
+];
+
+const portfolioState = { filter: 'all', search: '', initialised: false };
+
+function money(n) {
+  return '$' + n.toLocaleString('en-US');
+}
+
+function budgetTone(pct) {
+  if (pct >= 90) return 'var(--danger)';
+  if (pct >= 75) return 'var(--warning)';
+  return 'var(--primary)';
+}
+
+function renderPortfolioDashboard() {
+  renderPortfolioGrid();
+  renderPortfolioTimeline();
+  portfolioState.initialised = true;
+}
+
+function getFilteredProjects() {
+  const search = portfolioState.search.trim().toLowerCase();
+  return portfolioProjects.filter(p => {
+    const matchesFilter = portfolioState.filter === 'all' || p.rag === portfolioState.filter;
+    const matchesSearch = !search || p.name.toLowerCase().includes(search) || p.client.toLowerCase().includes(search);
+    return matchesFilter && matchesSearch;
+  });
+}
+
+function renderPortfolioGrid() {
+  const grid = document.getElementById('portfolioGrid');
+  if (!grid) return;
+  const list = getFilteredProjects();
+
+  if (list.length === 0) {
+    grid.innerHTML = `<div class="empty-portfolio-state">
+      <span style="font-size:32px" aria-hidden="true">🔍</span>
+      <div style="font-size:14px;font-weight:600;color:var(--text-primary)">No projects match your filters</div>
+      <div style="font-size:12px;color:var(--text-muted)">Try a different status filter or clear the search field.</div>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(p => {
+    const pct = Math.round((p.spent / p.budget) * 100);
+    const barColor = budgetTone(pct);
+    const sprintDots = p.sprints
+      ? `<div class="pm-item"><span class="pm-label">Delivery Stage</span><div class="sprint-dots" role="img" aria-label="${p.sprints.filter(s=>s==='done').length} of ${p.sprints.length} sprints complete">${p.sprints.map(s => `<div class="sdot ${s}"></div>`).join('')}</div></div>`
+      : `<div class="pm-item"><span class="pm-label">Delivery Stage</span><span class="pm-value plain">${p.phase.split('·')[1] ? p.phase.split('·')[1].trim() : p.phase}</span></div>`;
+
+    const riskBadge = p.risks === 0
+      ? `<span class="footer-badge ok">0 Risks</span>`
+      : `<span class="footer-badge ${p.risks >= 2 ? 'crit' : 'warn'}">${p.risks} Risk${p.risks > 1 ? 's' : ''}</span> <span class="text-muted" style="font-size:11px">${p.riskLabel}</span>`;
+    const decisionBadge = p.decisions === 0
+      ? `<span class="footer-badge info">0 Decisions</span>`
+      : `<span class="footer-badge warn">${p.decisions} Decision${p.decisions > 1 ? 's' : ''}</span> <span class="text-muted" style="font-size:11px">${p.decisionLabel}</span>`;
+
+    return `
+    <div class="card project-card" data-rag="${p.rag}" data-id="${p.id}" role="button" tabindex="0"
+         aria-label="View details for ${p.name}"
+         onclick="openProjectDetail(${p.id})"
+         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProjectDetail(${p.id});}">
+      <div class="project-card-head">
+        <div>
+          <div class="project-card-title">${p.name}</div>
+          <div class="project-card-client">Client: ${p.client} · PM: ${p.pm}</div>
+        </div>
+        <span class="rag ${p.rag}">${p.rag.toUpperCase()}</span>
+      </div>
+      <div class="project-meta-grid">
+        <div class="pm-item"><span class="pm-label">Phase</span><span class="pm-value plain"><span class="chip chip-blue">${p.phase}</span></span></div>
+        <div class="pm-item"><span class="pm-label">Go-Live</span><span class="pm-value plain" style="color:${p.rag==='red' ? 'var(--danger)' : 'var(--text-primary)'}">${p.golive}${p.rag==='red' ? ' ⚠' : ''}</span></div>
+        ${sprintDots}
+        <div class="pm-item"><span class="pm-label">Team Size</span><span class="pm-value plain">${p.team} FTE</span></div>
+        <div class="pm-item budget-row">
+          <div class="budget-row-labels">
+            <span>${money(p.spent)} spent</span>
+            <span>${pct}% · Budget: ${money(p.budget)}</span>
+          </div>
+          <div class="progress-bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${p.name} budget utilisation ${pct} percent">
+            <div class="progress-fill" style="width:${pct}%;background:${barColor}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="project-highlight"><strong>This period:</strong> ${p.highlight}</div>
+      <div class="project-footer">
+        <div class="footer-badges">${riskBadge}</div>
+        <div class="footer-badges">${decisionBadge}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function setPortfolioFilter(rag, btn) {
+  portfolioState.filter = rag;
+  document.querySelectorAll('.filter-tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+  });
+  if (btn) {
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+  }
+  renderPortfolioGrid();
+}
+
+function setPortfolioSearch(value) {
+  portfolioState.search = value;
+  renderPortfolioGrid();
+}
+
+function refreshPortfolio() {
+  renderPortfolioDashboard();
+  showToast('Portfolio data refreshed', 'success');
+}
+
+function showAddProjectModal() {
+  showToast('Add Project modal — coming in next update', 'info');
+}
+
+/* ---- Project detail modal ---- */
+function openProjectDetail(id) {
+  const p = portfolioProjects.find(x => x.id === id);
+  if (!p) return;
+  closeProjectDetail();
+
+  const pct = Math.round((p.spent / p.budget) * 100);
+  const overlay = document.createElement('div');
+  overlay.className = 'edi-modal-overlay';
+  overlay.id = 'projectDetailOverlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-labelledby', 'projectDetailTitle');
+  overlay.onclick = (e) => { if (e.target === overlay) closeProjectDetail(); };
+
+  overlay.innerHTML = `
+    <div class="edi-modal">
+      <div class="edi-modal-head">
+        <div>
+          <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Project Detail</div>
+          <div id="projectDetailTitle" style="font-size:15px;font-weight:700;color:var(--text-primary)">${p.name}</div>
+        </div>
+        <button class="edi-modal-close" aria-label="Close project detail" onclick="closeProjectDetail()">✕</button>
+      </div>
+      <div class="edi-modal-body">
+        <div class="edi-detail-row"><span class="edi-detail-label">Client</span><span class="edi-detail-value">${p.client}</span></div>
+        <div class="edi-detail-row"><span class="edi-detail-label">Project Manager</span><span class="edi-detail-value">${p.pm}</span></div>
+        <div class="edi-detail-row"><span class="edi-detail-label">RAG</span><span class="edi-detail-value"><span class="rag ${p.rag}">${p.rag.toUpperCase()}</span></span></div>
+        <div class="edi-detail-row"><span class="edi-detail-label">Phase</span><span class="edi-detail-value">${p.phase}</span></div>
+        <div class="edi-detail-row"><span class="edi-detail-label">Go-Live</span><span class="edi-detail-value">${p.golive}</span></div>
+        <div class="edi-detail-row"><span class="edi-detail-label">Team Size</span><span class="edi-detail-value">${p.team} FTE</span></div>
+        <div class="edi-detail-row"><span class="edi-detail-label">Budget</span><span class="edi-detail-value">${money(p.spent)} spent of ${money(p.budget)} (${pct}%)</span></div>
+        <div class="edi-detail-row"><span class="edi-detail-label">Highlight</span><span class="edi-detail-value">${p.highlight}</span></div>
+        <div class="edi-detail-row"><span class="edi-detail-label">Risks</span><span class="edi-detail-value">${p.risks} ${p.riskLabel ? '— ' + p.riskLabel : ''}</span></div>
+        <div class="edi-detail-row"><span class="edi-detail-label">Decisions</span><span class="edi-detail-value">${p.decisions} ${p.decisionLabel ? '— ' + p.decisionLabel : ''}</span></div>
+      </div>
+    </div>`;
+
+  document.body.appendChild(overlay);
+  document.addEventListener('keydown', escCloseProjectDetail);
+  const closeBtn = overlay.querySelector('.edi-modal-close');
+  if (closeBtn) closeBtn.focus();
+}
+
+function escCloseProjectDetail(e) {
+  if (e.key === 'Escape') closeProjectDetail();
+}
+
+function closeProjectDetail() {
+  const overlay = document.getElementById('projectDetailOverlay');
+  if (overlay) overlay.remove();
+  document.removeEventListener('keydown', escCloseProjectDetail);
+}
+
+/* ---- Programme timeline ---- */
+const TL_START = new Date('2026-01-01');
+const TL_END   = new Date('2027-04-01');
+const TL_SPAN  = TL_END - TL_START;
+const TL_TODAY = new Date('2026-06-28');
+const TL_COLORS = { green: 'var(--primary)', amber: 'var(--warning)', red: 'var(--danger)' };
+
+function tlPct(dateStr) {
+  const d = new Date(dateStr);
+  const clamped = new Date(Math.max(TL_START, Math.min(TL_END, d)));
+  return ((clamped - TL_START) / TL_SPAN * 100).toFixed(1);
+}
+
+function renderPortfolioTimeline() {
+  const tbody = document.getElementById('portfolioTimelineBody');
+  if (!tbody) return;
+  const todayPct = tlPct(TL_TODAY);
+
+  tbody.innerHTML = portfolioProjects.map(p => {
+    const left = parseFloat(tlPct(p.start));
+    const right = parseFloat(tlPct(p.end));
+    const width = Math.max(right - left, 1);
+    const color = TL_COLORS[p.rag];
+    const startLabel = new Date(p.start).toLocaleDateString('en-AU', { month: 'short', year: 'numeric' });
+    const endLabel = new Date(p.end).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: '2-digit' });
+
+    return `<tr>
+      <td class="td-primary">${p.name}</td>
+      <td class="td-mono">${startLabel}</td>
+      <td class="td-mono" style="color:${p.rag==='red' ? 'var(--danger)' : 'var(--text-secondary)'}">${endLabel}${p.rag==='red' ? ' ⚠' : ''}</td>
+      <td>
+        <div class="tl-track" role="img" aria-label="${p.name} runs from ${startLabel} to ${endLabel}">
+          <div class="tl-fill" style="left:${left}%;width:${width}%;background:${color}"></div>
+          <div class="tl-today-marker" style="left:${todayPct}%"></div>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+/* ---- Portfolio CSV export ---- */
+function exportPortfolioCSV() {
+  const headers = ['Project','Client','Project Manager','RAG','Phase','Go-Live','Team Size','Budget Spent','Total Budget','Budget Utilisation','Open Risks','Decisions Required','This Period Highlight'];
+  const rows = [headers];
+
+  portfolioProjects.forEach(p => {
+    const pct = Math.round((p.spent / p.budget) * 100);
+    rows.push([
+      p.name, p.client, p.pm, p.rag.toUpperCase(), p.phase, p.golive, `${p.team} FTE`,
+      money(p.spent), money(p.budget), `${pct}%`, String(p.risks), String(p.decisions), p.highlight
+    ]);
+  });
+
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'executive-delivery-intelligence-portfolio.csv';
+  a.click();
+  showToast('Portfolio exported — all 6 projects included', 'success');
+}
+
+/* ============================================================
+   STEERING COMMITTEE COPILOT
+   ============================================================ */
+async function generateSteeringReport() {
+  const project   = document.getElementById('sc-project')?.value || '';
+  const period    = document.getElementById('sc-period')?.value || '';
+  const budget    = document.getElementById('sc-budget')?.value || '';
+  const schedule  = document.getElementById('sc-schedule')?.value || '';
+  const risks     = document.getElementById('sc-risks')?.value || '';
+  const issues    = document.getElementById('sc-issues')?.value || '';
+  const vendors   = document.getElementById('sc-vendors')?.value || '';
+  const decisions = document.getElementById('sc-decisions')?.value || '';
+
+  const prompt = document.getElementById('steeringPrompt');
+  const thinking = document.getElementById('steeringThinking');
+  const output = document.getElementById('steeringOutput');
+  const actions = document.getElementById('steeringActions');
+
+  if (prompt) prompt.style.display = 'none';
+  if (thinking) thinking.style.display = 'block';
+  if (output) output.style.display = 'none';
+
+  const system = `You are an expert Salesforce Program Director and executive communication specialist.
+You produce concise, professional steering committee reports for enterprise programs.
+Format your output with clear sections. Use **bold** for key terms. Be direct and executive-ready.`;
+
+  const userPrompt = `Generate a full Steering Committee Executive Report for:
+
+Project: ${project}
+Period: ${period}
+Budget: ${budget}
+Schedule: ${schedule}
+Top Risks: ${risks}
+Issues & Dependencies: ${issues}
+Vendor Updates: ${vendors}
+Decisions Required: ${decisions}
+
+Include these sections:
+1. EXECUTIVE SUMMARY (3 sentences max)
+2. OVERALL RAG STATUS with one-line rationale
+3. ACHIEVEMENTS THIS PERIOD (3-5 bullets)
+4. TOP RISKS & MITIGATIONS (table format)
+5. BUDGET STATUS
+6. SCHEDULE STATUS
+7. VENDOR UPDATES
+8. DECISIONS REQUIRED FROM STEERING COMMITTEE
+9. SPONSOR TALKING POINTS (3 bullets — what the sponsor should say to open the meeting)
+10. NEXT PERIOD FOCUS
+
+Keep it tight — this is a C-suite document.`;
+
+  try {
+    const text = await callClaude(system, userPrompt);
+    if (thinking) thinking.style.display = 'none';
+    if (output) {
+      output.style.display = 'block';
+      output.innerHTML = `<div class="ai-output-section">${formatAIText(text)}</div>`;
+    }
+    if (actions) actions.style.display = 'flex !important';
+    showToast('Steering committee report generated', 'success');
+  } catch (err) {
+    if (thinking) thinking.style.display = 'none';
+    if (output) {
+      output.style.display = 'block';
+      output.innerHTML = generateFallbackSteeringReport(project, period, budget, schedule, risks, decisions);
+    }
+    showToast('Using offline report template', 'info');
+  }
+}
+
+function generateFallbackSteeringReport(project, period, budget, schedule, risks, decisions) {
+  return `<div class="ai-output-section">
+    <div class="ai-rag-header"><span class="rag green">GREEN</span><strong>${project}</strong><span style="color:var(--text-muted);font-size:12px">· ${period}</span></div>
+    <h3>Executive Summary</h3>
+    <p>${project} is progressing on schedule and within budget. Key milestones are on track and stakeholder engagement remains strong. One risk requires steering committee attention and decision this session.</p>
+    <h4>Budget</h4><p>${budget}</p>
+    <h4>Schedule</h4><p>${schedule}</p>
+    <h4>Top Risks</h4><p>${risks.split('\n').map(r => `• ${r}`).join('<br>')}</p>
+    <h4>Decisions Required</h4><p>${decisions.split('\n').map(d => `• ${d}`).join('<br>')}</p>
+    <h4>Sponsor Talking Points</h4>
+    <ul><li>Program is delivering to plan — no sponsor intervention required at this stage</li>
+    <li>One decision is required today regarding the risk escalation item</li>
+    <li>Next milestone delivery is on track for the dates committed in the SOW</li></ul>
+  </div>`;
+}
+
+function clearSteeringForm() {
+  ['sc-project','sc-period','sc-budget','sc-schedule','sc-risks','sc-issues','sc-vendors','sc-decisions'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const prompt = document.getElementById('steeringPrompt');
+  const output = document.getElementById('steeringOutput');
+  if (prompt) prompt.style.display = 'flex';
+  if (output) { output.style.display = 'none'; output.innerHTML = ''; }
+  showToast('Form cleared', 'info');
+}
+
+function copySteeringReport() {
+  const output = document.getElementById('steeringOutput');
+  if (!output) return;
+  const text = output.innerText;
+  navigator.clipboard.writeText(text).then(() => showToast('Report copied to clipboard', 'success'));
+}
+
+function emailSteeringReport() {
+  const output = document.getElementById('steeringOutput');
+  const text = output ? encodeURIComponent(output.innerText) : '';
+  window.location.href = `mailto:?subject=Steering Committee Report&body=${text}`;
+  showToast('Opening email client...', 'info');
+}
+
+/* ============================================================
+   EXECUTIVE STATUS GENERATOR
+   ============================================================ */
+async function generateStatusReport() {
+  const type        = document.getElementById('sg-type')?.value || 'weekly';
+  const program     = document.getElementById('sg-program')?.value || '';
+  const period      = document.getElementById('sg-period')?.value || '';
+  const rag         = document.getElementById('sg-rag')?.value || 'GREEN';
+  const achievements= document.getElementById('sg-achievements')?.value || '';
+  const nextsteps   = document.getElementById('sg-nextsteps')?.value || '';
+  const budgetline  = document.getElementById('sg-budgetline')?.value || '';
+
+  const prompt = document.getElementById('sgPrompt');
+  const thinking = document.getElementById('sgThinking');
+  const output = document.getElementById('sgOutput');
+
+  if (prompt) prompt.style.display = 'none';
+  if (thinking) thinking.style.display = 'block';
+  if (output) output.style.display = 'none';
+
+  const typeLabels = {
+    weekly: 'Weekly Status Report', monthly: 'Monthly Program Update',
+    sponsor: 'Sponsor Update', executive: 'Executive Summary', board: 'Board Report'
+  };
+
+  const system = `You are a Senior Salesforce Program Manager producing a ${typeLabels[type]}.
+Write concisely, professionally, and with an executive audience in mind.
+Use **bold** for key figures. Include an overall RAG status.`;
+
+  const userPrompt = `Write a ${typeLabels[type]} for:
+Program: ${program}
+Period: ${period}
+Overall Status: ${rag}
+Budget: ${budgetline}
+Achievements: ${achievements}
+Next Steps: ${nextsteps}
+
+Format it as a professional ${typeLabels[type]} ready to send. Include:
+- Header with program name, period, and RAG
+- Executive Summary (2-3 sentences)
+- Achievements / Completed This Period
+- Budget Status
+- Key Risks (brief)
+- Next Period Focus / Actions
+- Sign-off line from the Program Manager`;
+
+  try {
+    const text = await callClaude(system, userPrompt);
+    if (thinking) thinking.style.display = 'none';
+    if (output) {
+      output.style.display = 'block';
+      output.innerHTML = `<div class="ai-output-section">${formatAIText(text)}</div>`;
+    }
+    showToast(`${typeLabels[type]} generated`, 'success');
+  } catch (err) {
+    if (thinking) thinking.style.display = 'none';
+    if (output) {
+      output.style.display = 'block';
+      output.innerHTML = `<div class="ai-output-section">
+        <div class="ai-rag-header"><span class="rag ${rag.toLowerCase()}">${rag}</span><strong>${program}</strong><span style="color:var(--text-muted);font-size:12px">· ${period}</span></div>
+        <h3>${typeLabels[type]}</h3>
+        <h4>Executive Summary</h4><p>${program} is ${rag === 'GREEN' ? 'on track and delivering to plan' : rag === 'AMBER' ? 'at risk — mitigation underway' : 'in critical status — recovery plan active'}.</p>
+        <h4>Achievements</h4><p>${achievements.split('\n').map(a=>'• '+a).join('<br>')}</p>
+        <h4>Budget</h4><p>${budgetline}</p>
+        <h4>Next Steps</h4><p>${nextsteps.split('\n').map(n=>'• '+n).join('<br>')}</p>
+        <p style="margin-top:16px;color:var(--text-muted);font-size:11px">— Bharani Bussari, Senior Project Manager</p>
+      </div>`;
+    }
+    showToast('Using offline report template', 'info');
+  }
+}
+
+function copyStatusReport() {
+  const output = document.getElementById('sgOutput');
+  if (!output) return;
+  navigator.clipboard.writeText(output.innerText).then(() => showToast('Report copied to clipboard', 'success'));
+}
+
+/* ============================================================
+   RAID INTELLIGENCE
+   ============================================================ */
+async function analyseRAID() {
+  const input = document.getElementById('raid-input')?.value?.trim();
+  if (!input) { showToast('Please paste some project text first', 'error'); return; }
+
+  const thinking = document.getElementById('raidThinking');
+  const output = document.getElementById('raidOutput');
+  const prompt = document.getElementById('raidPrompt');
+
+  if (prompt) prompt.style.display = 'none';
+  if (thinking) thinking.style.display = 'block';
+  if (output) output.style.display = 'none';
+
+  const system = `You are an expert Project Manager specialising in RAID (Risks, Assumptions, Issues, Dependencies) analysis.
+Extract and classify all RAID items from the provided text. Be thorough and practical.
+Format your response as structured sections with clear IDs and priorities.`;
+
+  const userPrompt = `Analyse the following project text and extract all RAID items:
+
+"${input}"
+
+For each item found, provide:
+- ID (R-xx for Risks, A-xx for Assumptions, I-xx for Issues, D-xx for Dependencies)
+- Type
+- Description (clear, action-oriented)
+- Priority (Critical/High/Medium/Low)
+- Recommended Owner role
+- Recommended Action
+
+Then provide:
+- A clustering summary (group related items)
+- 2-3 predicted future risks if current trends continue
+- Top priority action for the program manager
+
+Format with clear **bold** headers for each section.`;
+
+  try {
+    const text = await callClaude(system, userPrompt);
+    if (thinking) thinking.style.display = 'none';
+    if (output) {
+      output.style.display = 'block';
+      output.innerHTML = `<div class="ai-output-section">${formatAIText(text)}</div>`;
+    }
+    showToast('RAID analysis complete — ' + (text.match(/[RAID]-\d+/g) || []).length + ' items found', 'success');
+  } catch (err) {
+    if (thinking) thinking.style.display = 'none';
+    if (output) {
+      output.style.display = 'block';
+      output.innerHTML = `<div class="ai-output-section">
+        <h3>RAID Analysis Results</h3>
+        <h4>Risks Identified</h4>
+        <ul><li><strong>R-04:</strong> Privacy policy changes may delay legal sign-off — Priority: Critical — Owner: Legal/PM</li>
+        <li><strong>R-05:</strong> SAP upgrade dependency creates schedule risk — Priority: High — Owner: Arch Team</li></ul>
+        <h4>Assumptions Identified</h4>
+        <ul><li><strong>A-03:</strong> SAP upgrade completed by Q3 — Priority: High — Confirm in writing</li>
+        <li><strong>A-04:</strong> Business users available for July UAT — Priority: Medium — Confirm with BA lead</li></ul>
+        <h4>Issues Identified</h4>
+        <ul><li><strong>I-02:</strong> Data mapping issue blocking UAT — Priority: High — Fix this sprint</li>
+        <li><strong>I-03:</strong> MuleSoft SLA not confirmed in writing — Priority: Medium — Chase vendor this week</li></ul>
+        <h4>Dependencies Identified</h4>
+        <ul><li><strong>D-02:</strong> Dealer portal required before Einstein rollout — Priority: Medium — Confirm with VGA IT</li></ul>
+        <h4>🤖 AI Priority Action</h4>
+        <p>Legal sign-off risk is the critical path item. Escalate today with a pre-drafted 5-day extension protocol to avoid cascading impact on budget and UAT schedule.</p>
+      </div>`;
+    }
+    showToast('RAID analysis complete (offline mode)', 'info');
+  }
+}
+
+/* ============================================================
+   STAKEHOLDER INTELLIGENCE
+   ============================================================ */
+async function analyseStakeholders() {
+  const input = document.getElementById('stak-input')?.value?.trim();
+  if (!input) { showToast('Please paste stakeholder notes first', 'error'); return; }
+
+  const thinking = document.getElementById('stakThinking');
+  const output = document.getElementById('stakAIOutput');
+
+  if (thinking) thinking.style.display = 'block';
+  if (output) output.style.display = 'none';
+
+  const system = `You are an expert in stakeholder management and organisational politics.
+Analyse stakeholder notes and produce actionable engagement recommendations.
+Be direct about political risks. Use **bold** for key insights.`;
+
+  const userPrompt = `Analyse these stakeholder notes and produce a stakeholder intelligence report:
+
+"${input}"
+
+Include:
+1. **Stakeholder Summary Table** — Name, Role, Power (H/M/L), Interest (H/M/L), Current Stance, Strategy
+2. **Political Risk Analysis** — who could block or derail the program and why
+3. **Top 3 Engagement Actions** — specific, immediate actions for the PM
+4. **Communication Recommendations** — tailored approach per key stakeholder
+5. **Coalition Building** — who to align first to influence the resistors`;
+
+  try {
+    const text = await callClaude(system, userPrompt);
+    if (thinking) thinking.style.display = 'none';
+    if (output) {
+      output.style.display = 'block';
+      output.innerHTML = `<div class="ai-output-section">${formatAIText(text)}</div>`;
+    }
+    showToast('Stakeholder analysis complete', 'success');
+  } catch (err) {
+    if (thinking) thinking.style.display = 'none';
+    if (output) {
+      output.style.display = 'block';
+      output.innerHTML = `<div class="ai-output-section">
+        <h4>Political Risk Summary</h4>
+        <p><strong>James (Marketing)</strong> is your primary resistance risk. His budget concern is a proxy for feeling excluded from decisions. Engage him with a dedicated ROI session before the next steering committee — present eShop revenue uplift data directly to him.</p>
+        <h4>Top 3 Engagement Actions</h4>
+        <ul>
+          <li>Book a 1:1 with Marcus (CEO) this week to pre-brief on the legal sign-off risk before it hits steering committee</li>
+          <li>Send David (CISO) a weekly compliance summary — this will shift him from neutral to active supporter</li>
+          <li>Run a dedicated session with James (Marketing) showing the 7% accessory uplift from eShop Phase 1 — data will neutralise resistance</li>
+        </ul>
+        <h4>Coalition Strategy</h4>
+        <p>Secure Helen (IT Director) as your internal champion first — she has high power and is already engaged. Use her credibility to influence Sandra (CFO) on budget decisions.</p>
+      </div>`;
+    }
+    showToast('Stakeholder analysis complete (offline mode)', 'info');
+  }
+}
+
+/* ============================================================
+   BUDGET FORECAST AI
+   ============================================================ */
+async function runBudgetForecast() {
+  const output = document.getElementById('budgetForecastOutput');
+  if (!output) return;
+  output.innerHTML = '<div class="ai-thinking" style="padding:10px 0"><span>🤖 Running AI budget forecast</span><div class="dots"><span></span><span></span><span></span></div></div>';
+
+  const system = `You are a Senior Program Financial Controller. Provide concise, actionable budget analysis.`;
+  const userPrompt = `Analyse this portfolio budget situation:
+- Total approved: $6M across 4 programs
+- Spent to date: $3.9M (65% utilised, midpoint of program)
+- eShop variance: -$42K (SAP integration underestimated)
+- Einstein Analytics: 93% spent, near completion — no concern
+- VGA Agentforce & Data Cloud: on track
+- Remaining: $2.1M to complete all 4 programs
+
+Provide: (1) EAC (Estimate at Completion) for the portfolio, (2) whether the -$42K variance is recoverable, (3) recommended financial actions, (4) cashflow prediction for next 3 months. Be specific with numbers.`;
+
+  try {
+    const text = await callClaude(system, userPrompt);
+    output.innerHTML = `<div class="output-block"><h4>🤖 AI Budget Forecast</h4>${formatAIText(text)}</div>`;
+    showToast('Budget forecast updated', 'success');
+  } catch (err) {
+    output.innerHTML = `<div class="output-block"><h4>🤖 AI Budget Forecast</h4>
+      <p>Portfolio EAC: <strong>$5.96M</strong> (99.3% of $6M approved). The -$42K eShop variance is recoverable by deferring Phase 2 AR Brochure feature ($50K scope) to a future CR. Recommend releasing $50K contingency immediately. Cashflow: ~$700K/month burn rate projected through August close.</p>
+    </div>`;
+    showToast('Budget forecast complete (offline mode)', 'info');
+  }
+}
+
+/* ============================================================
+   DELIVERY PREDICTOR
+   ============================================================ */
+async function runDeliveryForecast() {
+  const output = document.getElementById('deliveryForecastAI');
+  if (!output) return;
+  output.innerHTML = '<div class="ai-thinking" style="padding:10px 0"><span>🤖 Computing delivery forecast</span><div class="dots"><span></span><span></span><span></span></div></div>';
+
+  const system = `You are an Agile Delivery Coach and forecasting expert. Provide precise, data-driven forecasts.`;
+  const userPrompt = `Analyse this Agile delivery situation:
+- Program: VGA Agentforce POC
+- Sprints completed: 5 of 8 planned
+- Story points done: 312 of 400 (78%)
+- Average velocity: Sprint 1=18, S2=22, S3=24, S4=26, S5=24 — avg 22.8pts
+- Remaining points: 88
+- Sprints remaining: 3 (S6 in progress)
+- Critical path blocker: Legal sign-off (5 days risk)
+- Team: 12 FTE, stable, no planned leave
+
+Provide: (1) most likely completion date, (2) optimistic and pessimistic scenarios, (3) AI confidence %, (4) impact of 5-day legal sign-off delay, (5) recovery actions if needed.`;
+
+  try {
+    const text = await callClaude(system, userPrompt);
+    output.innerHTML = `<div class="output-block"><h4>🤖 AI Delivery Forecast</h4>${formatAIText(text)}</div>`;
+    showToast('Delivery forecast updated', 'success');
+  } catch (err) {
+    output.innerHTML = `<div class="output-block"><h4>🤖 AI Delivery Forecast</h4>
+      <p><strong>Most Likely:</strong> 28 Aug 2025 (83% confidence) — 88 remaining pts at 22.8 avg velocity = 3.9 sprints.<br>
+      <strong>Optimistic:</strong> 14 Aug (velocity returns to S4 peak of 26pts).<br>
+      <strong>Pessimistic:</strong> 11 Sep (legal delay + velocity dip).<br>
+      <strong>Recovery:</strong> Begin agent training on anonymised data during legal sign-off to absorb idle time. Zero sprint waste.</p>
+    </div>`;
+    showToast('Forecast complete (offline mode)', 'info');
+  }
+}
+
+/* ============================================================
+   ASK DELIVERY INTELLIGENCE
+   ============================================================ */
+const askpdHistory = [];
+
+async function sendAskPD() {
+  const inputEl = document.getElementById('askpdInput');
+  const msg = inputEl?.value?.trim();
+  if (!msg) return;
+
+  inputEl.value = '';
+  appendMessage('user', msg);
+
+  const thinking = document.getElementById('askpdThinking');
+  if (thinking) thinking.style.display = 'block';
+
+  const system = `You are Delivery Intelligence, an elite AI-enabled Senior Delivery and Transformation Leader assistant with 18+ years of Salesforce and enterprise program delivery experience — working in the persona of Bharani Bussari, Senior Project Manager.
+
+Your portfolio context:
+- 4 active programs for Volkswagen Group Australia (VGA, VWFS, Audi, Skoda)
+- Total portfolio: $6M, CSAT 5/5 across all engagements
+- Programs: VGA Agentforce POC (GREEN, 78%), Data Cloud Migration (AMBER — legal sign-off delay), Einstein Analytics for Audi (GREEN, 92%), eShop Aftersales/Skoda (RED — budget variance -$42K, scope creep)
+- Team: Up to 35 FTE, multiple vendors including MuleSoft, SAP SI, AWS
+- Key risks: R-01 Legal sign-off (Critical), R-02 Scope creep (High), R-03 Budget variance (High)
+- Tools: Agentforce, Sales Cloud, Service Cloud, Experience Cloud, Data Cloud, MuleSoft, Einstein Analytics
+- Certifications: 7x Salesforce including Agentforce Specialist, PMP, Six Sigma Green Belt
+
+Answer as a senior delivery leader — be direct, decisive, practical. Give specific recommendations, not generic advice. Reference the actual portfolio data when relevant.`;
+
+  askpdHistory.push({ role: 'user', content: msg });
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system: system,
+        messages: askpdHistory
+      })
+    });
+
+    const data = await response.json();
+    const reply = data.content?.map(b => b.text || '').join('') || 'No response received.';
+    askpdHistory.push({ role: 'assistant', content: reply });
+
+    if (thinking) thinking.style.display = 'none';
+    appendMessage('ai', reply);
+  } catch (err) {
+    if (thinking) thinking.style.display = 'none';
+    const fallback = generateFallbackPDResponse(msg);
+    askpdHistory.push({ role: 'assistant', content: fallback });
+    appendMessage('ai', fallback);
+    showToast('Running in offline mode', 'info');
+  }
+}
+
+function appendMessage(role, text) {
+  const container = document.getElementById('askpdMessages');
+  if (!container) return;
+
+  const time = new Date().toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
+  const isUser = role === 'user';
+
+  const div = document.createElement('div');
+  div.className = isUser ? 'msg-user' : 'msg-ai';
+  div.innerHTML = `
+    <div class="msg-avatar" style="background:${isUser ? 'linear-gradient(135deg,#8B5CF6,#2563EB)' : 'linear-gradient(135deg,#2563EB,#06B6D4)'}" aria-hidden="true">
+      ${isUser ? '👤' : '⚡'}
+    </div>
+    <div>
+      <div class="msg-bubble">${isUser ? text : formatAIText(text)}</div>
+      <div class="msg-time">${isUser ? 'You' : 'Delivery Intelligence'} · ${time}</div>
+    </div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function useTemplate(prompt) {
+  const inputEl = document.getElementById('askpdInput');
+  if (inputEl) {
+    inputEl.value = prompt;
+    inputEl.focus();
+    inputEl.scrollTop = 0;
+    showToast('Template loaded — press Enter or click Send', 'info');
+  }
+}
+
+function generateFallbackPDResponse(msg) {
+  const lower = msg.toLowerCase();
+  if (lower.includes('recovery') || lower.includes('red') || lower.includes('eshop')) {
+    return `**eShop Recovery Plan**
+
+Immediate actions (next 48hrs):
+• **Freeze scope** — no new requirements accepted without approved CR
+• **Escalate budget variance** to steering committee with pre-drafted $50K CR
+• **Daily standups** with Tech Lead on SAP integration — unblock this week
+• **Defer** AR Brochure feature to Phase 2 — this recovers the $42K variance
+
+Recovery timeline: 4 weeks to get back to AMBER with full team focus. GREEN by go-live if scope is frozen today.
+
+The SAP complexity was underestimated in discovery. Standard lesson: always add 20% buffer to integration estimates involving legacy ERP.`;
+  }
+  if (lower.includes('agentforce') || lower.includes('ai agent')) {
+    return `**Agentforce Strategy Recommendation**
+
+For your context (VGA dealer network, 150 dealers, Salesforce Service Cloud):
+
+**Phase 1 (current POC):** Test-drive booking automation — AI routes inbound requests, checks dealer calendar via API, confirms booking without human intervention. 70% of test-drive admin eliminated.
+
+**Phase 2 (recommended):** Warranty claims triage — Agent reads claim submission, checks vehicle history in connected cars data, auto-approves standard claims under $500, escalates exceptions. Estimated 60% faster processing.
+
+**ROI case for steering committee:** 150 dealers × 2hrs/week admin saved × $85/hr = **$663K/year** labour saving. Present this to Sandra (CFO) before the budget conversation.
+
+Your Agentforce Specialist credential is rare — you're one of ~50-80 in Australia. Lead with it.`;
+  }
+  return `**Delivery Intelligence Response**
+
+Based on your portfolio context: with 4 programs running simultaneously, I'd prioritise resolving R-01 (legal sign-off) today — it's the single item with cascade risk across Data Cloud, eShop timeline, and Q3 budget.
+
+Specific recommendation: draft a one-page escalation brief to the VWFS CISO with three options: (1) approve 5-day extension, (2) approve parallel processing on anonymised data, (3) accept delay and approve timeline revision. Give them options — executives decide faster when the choices are pre-packaged.
+
+What specifically would you like me to help with?`;
+}
+
+</script>
 </body>
 </html>
